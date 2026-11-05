@@ -20,12 +20,14 @@ Compare message lengths. `app.py` là entrypoint từ repository root. Không c�
 
 ## Triển khai Community Cloud sau khi reviewer đồng ý
 
-1. Xác minh commit đã review trên GitHub. Chọn nhánh
-   `feat/step-06-attack-ui` hoặc **reviewed integration branch** chứa TASK 06.
-   `main` có thể đang ở TASK 02 và **không có `app.py`**; không chọn `main` cũ.
+1. Xác minh commit đã review trên GitHub. `main` đã được fast-forward chứa
+   TASK 06 (`0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d`), nên có thể chọn
+   **main** để deploy. Nếu trạng thái GitHub thay đổi về sau, chỉ chọn `main`
+   khi nó vẫn chứa commit này; nếu không, chọn `feat/step-06-attack-ui` hoặc
+   một reviewed integration branch có đủ TASK 06.
 2. Tại [share.streamlit.io](https://share.streamlit.io), chọn workspace của
    owner `Dung092005` → **Create app** → **Yup, I have an app**. Nhập repository
-   `Dung092005/Crypto-project`, branch đã review ở bước 1, main file path
+   `Dung092005/Crypto-project`, branch `main` đã xác minh ở bước 1, main file path
    `app.py` (root). Chọn URL tùy ý.
 3. Trong Advanced settings chọn **Python 3.12** để khớp môi trường đã kiểm
    chứng. Không cần secrets cho Attack Lab. Bấm Deploy **chỉ khi được giao
