@@ -455,3 +455,18 @@ $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'; $env:PYTHONIOENCODING='utf-8'
 TASK 08 Secure Sharing UI chưa làm; không làm benchmark/report hoặc public
 deployment ở TASK 07. Reviewer cần kiểm tra branch và UI thực tế trước khi
 người dùng triển khai Cloud.
+
+## Repository documentation refresh · README + MIT
+
+Theo yêu cầu của người dùng, viết lại root README cho người mới: mục tiêu,
+trạng thái ba lab, quick start Windows/macOS/Linux, các bước demo, lệnh test,
+kiến trúc, giới hạn bảo mật, liên kết tài liệu và hỗ trợ. Thêm `LICENSE` MIT
+với holder `BroadcastGuard contributors` (2026); `pyproject.toml` khai báo
+SPDX `MIT`, `license-files = ["LICENSE"]` và yêu cầu setuptools >=77.0.3 để
+build backend hiểu PEP 639. Không đổi code mật mã hoặc giao diện.
+
+Kiểm chứng: editable install và wheel build PASS; wheel chứa LICENSE và
+`License-Expression: MIT`. Các liên kết nội bộ trong README tồn tại.
+Toàn bộ pytest **220 passed in 31.52s** với `--basetemp` trong workspace;
+compileall, imports và `git diff --check` PASS. Không có benchmark hoặc
+public deployment mới được thực hiện ở bước tài liệu này.

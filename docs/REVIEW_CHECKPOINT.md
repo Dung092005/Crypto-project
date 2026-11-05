@@ -63,6 +63,10 @@
   before selecting `main`. User handles deployment. No public deployment
   performed. Browser visual QA/screenshot was unavailable; AppTest and health
   check are separate evidence.
+- **Repository presentation:** root README now gives quick start, two UI demos,
+  Secure Sharing CLI status and security limits. Root `LICENSE` uses MIT with
+  `BroadcastGuard contributors` as copyright holder; `pyproject.toml` declares
+  SPDX `MIT` and packages the license file. No application behavior changed.
 - **Future decisions:** Keep attacker input public-only, report semantic statuses
   separately from UI colors, preserve byte length for leading zeros, and record
   actual seeds/versions/hardware/run artifacts when experiments begin.
