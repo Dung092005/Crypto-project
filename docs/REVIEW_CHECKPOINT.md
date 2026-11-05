@@ -3,14 +3,14 @@
 - **Project:** Educational RSA Broadcast Attack, OAEP defense, and secure
   hybrid file sharing. See `PROJECT_CONTEXT.md` for scope and threat model.
 - **Repository:** `https://github.com/Dung092005/Crypto-project.git`.
-  TASK 01–04 approved by reviewer. Verified TASK 04 baseline:
-  `2ab75d50a2fe036aa3811809b7b9a608c46bbdc4` on
-  `feat/step-04-oaep-defense`. TASK 05 review branch:
-  `feat/step-05-hybrid-sharing`; verify final SHA with `git log -1`.
+  TASK 01–05 approved by reviewer. Verified TASK 05 baseline:
+  `3e8b5249eb832899a22253b946683ada99792bbc` on
+  `feat/step-05-hybrid-sharing`. TASK 06 review branch:
+  `feat/step-06-attack-ui`; verify final SHA with `git log -1`.
 - **Completed:** TASK 01 package and arithmetic; TASK 02 public-only attack
   engine and evaluator; TASK 03 seven-subset analyzer and length sweep; TASK 04
-  controlled RSA-OAEP Defense Lab. TASK 05 hybrid sharing is implemented on
-  the review branch, pending review.
+  controlled RSA-OAEP Defense Lab; TASK 05 hybrid sharing. TASK 06 interactive
+  Attack Lab UI is implemented on the review branch, pending review.
   Read `PROGRESS.md` for executed commands and outcomes.
 - **Architecture:** `math_core.py` owns CRT and exact integer roots;
   `attack_lab.py` separates builder, Eve, and ground-truth evaluator;
@@ -24,6 +24,8 @@
   `serialize_package`, `deserialize_package`, `decrypt_file_for_recipient`,
   `attempt_decrypt_file_for_recipient`, `summarize_package`. See
   `SECURE_SHARING_DESIGN.md` for data flows.
+  TASK 06 adds `app.py` and `ui/attack_presenter.py`; UI calls reviewed Attack
+  Lab/Conditions APIs and retains scenario/results per Streamlit session.
 - **Cryptographic assumptions:** Same integer M, e=3, pairwise-coprime moduli,
   `M < n_i`, Textbook RSA deliberately insecure. Eve knows `(n,e,c)` only.
   `exact_root` does not imply recovered M. Evaluator-only bound is `M³ < N`.
@@ -35,16 +37,21 @@
   format v1 canonical JSON header as AAD. Public keys must be authenticated
   beforehand. Fingerprints do not prove identity; no sender authentication or
   replay protection is provided.
-- **Testing:** TASK 04 baseline: 162 passed. TASK 05 full suite: 203 passed;
-  CLI examples 01–07, compileall, imports and diff check status are recorded
-  in `PROGRESS.md`. Python 3.12.10 / cryptography 48.0.1; local Windows
+- **Testing:** TASK 05 baseline: 203 passed. TASK 06: 9 AppTest UI tests and
+  212 total tests passed; CLI examples 01–07, compileall, imports and runtime
+  health results are recorded in `PROGRESS.md`. Python 3.12.10 / Streamlit 1.60.0 /
+  cryptography 48.0.1; local Windows
   sandbox requires the temporary ACL workaround documented there. No benchmark
   claims are based on these engineering checks.
 - **Technical debt:** In-memory demo private keys only, 5 MiB whole-file limit;
   no streaming, certificate/key distribution, sender signature, replay defense,
   network or persistence. Filename is display-only, never a trusted output path.
-- **Next planned task:** TASK 06 Attack Lab Streamlit UI, only after TASK 05
-  review and a separate request. The academic report has not begun.
+- **Next planned tasks:** TASK 07 Defense Lab UI; TASK 08 Secure Sharing UI;
+  TASK 09 experiments/analytics; TASK 10 testing/evaluation/completion.
+  Each needs separate request/review. Academic report has not begun.
+- **Cloud readiness:** root `app.py`, pinned `requirements.txt`, dark theme,
+  session isolation, `DEPLOYMENT.md`. Deploy from reviewed TASK 06 branch or
+  integration branch, never outdated `main`. No public deployment performed.
 - **Future decisions:** Keep attacker input public-only, report semantic statuses
   separately from UI colors, preserve byte length for leading zeros, and record
   actual seeds/versions/hardware/run artifacts when experiments begin.

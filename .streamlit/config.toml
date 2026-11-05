@@ -1,0 +1,16 @@
+[theme]
+base = "dark"
+primaryColor = "#0B766E"
+backgroundColor = "#0B1220"
+secondaryBackgroundColor = "#142337"
+textColor = "#EAF3FA"
+linkColor = "#67E8F9"
+borderColor = "#30485B"
+redColor = "#FB7185"
+greenColor = "#2DD4BF"
+orangeColor = "#FBBF24"
+font = "sans-serif"
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"

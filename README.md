@@ -4,7 +4,8 @@
 Attack Lab và bộ phân tích điều kiện. TASK 04 thêm Defense Lab so sánh Textbook
 RSA với RSA-OAEP trên cùng thông điệp, cùng ba khóa và cùng phép thử của Eve.
 TASK 05 bổ sung mã hóa file cho nhiều người nhận bằng AES-256-GCM và RSA-OAEP.
-Chưa có giao diện web.
+TASK 06 thêm giao diện Streamlit tương tác cho Attack Lab. Defense UI và
+Secure Sharing UI chưa được triển khai.
 
 ## Cài đặt trên Windows
 
@@ -21,15 +22,18 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -X utf8 examples\05_conditions_analyzer.py
 .\.venv\Scripts\python.exe -X utf8 examples\06_defense_lab.py
 .\.venv\Scripts\python.exe -X utf8 examples\07_hybrid_sharing.py
+.\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
 Không cần activate môi trường, đổi ExecutionPolicy hoặc quyền admin. Dùng
 `python` thay `py -3` nếu máy không có Python Launcher. Trên macOS/Linux dùng
 `python3 -m venv .venv`, rồi `.venv/bin/python` thay đường dẫn Windows.
 
-`pyproject.toml` quản lý dependency: `cryptography` cho demo RSA/OAEP và `pytest`
-trong extra `dev`. Lõi toán học chỉ dùng standard library. Streamlit là kế hoạch
-giai đoạn sau, chưa phải dependency của TASK 01.
+`pyproject.toml` quản lý `cryptography`, `streamlit` và `pytest` trong extra
+`dev`. `requirements.txt` pin phiên bản runtime để Streamlit Community Cloud
+cài đúng môi trường đã kiểm chứng. Lõi toán học chỉ dùng standard library.
+Ứng dụng local mở ở `http://localhost:8501`; xem [hướng dẫn Cloud](docs/DEPLOYMENT.md)
+trước khi triển khai. TASK 06 chưa được deploy công khai.
 
 ## Cấu trúc
 
@@ -41,6 +45,10 @@ broadcastguard/           Python package
     conditions_analyzer.py Phân tích bảy tập người nhận và quét độ dài
     defense_lab.py        So sánh Textbook RSA / RSA-OAEP có kiểm soát
     hybrid_sharing.py     Mã hóa file nhiều người nhận, gói v1
+    ui/attack_presenter.py Định dạng kết quả cho Attack Lab UI
+app.py                    Streamlit Attack Lab entrypoint
+.streamlit/config.toml    Theme dark
+requirements.txt          Runtime dependencies cho Community Cloud
 examples/                 Bảy demo CLI
 tests/                    Unit tests và smoke tests chạy demo bằng subprocess
 docs/
@@ -49,6 +57,8 @@ docs/
     DECISIONS.md          Quyết định kiến trúc và lý do
     REVIEW_CHECKPOINT.md Bàn giao trạng thái đã kiểm chứng
     SECURE_SHARING_DESIGN.md Định dạng gói và giới hạn bảo mật
+    UI_DESIGN.md          Luồng tương tác và màu Attack Lab
+    DEPLOYMENT.md         Hướng dẫn Cloud, kiểm tra và rollback
 AGENTS.md                 Quy tắc tiếp tục công việc cho coding agent
 pyproject.toml            Packaging, dependencies và pytest
 ```
@@ -86,6 +96,14 @@ metadata, danh sách người nhận và wrapped keys được xác thực. `Pac
 báo cấu trúc sai; `DecryptionFailed` báo người nhận/khóa/xác thực không thành công.
 Public keys phải được xác thực trước; package không có chữ ký người gửi và không
 chống replay hoặc thay thế toàn bộ. Xem [thiết kế gói v1](docs/SECURE_SHARING_DESIGN.md).
+
+TASK 06: chạy `app.py`, chọn mẫu 1/96/180 byte hoặc nhập UTF-8 tối đa 190 byte,
+bấm **Generate RSA Scenario**, chọn các ciphertext Eve thu được, rồi bấm
+**Run Broadcast Attack**. Giao diện hiển thị CRT, căn bậc ba, kết quả đối
+chiếu riêng, bảng bảy tập con và phép quét độ dài dùng cùng bộ modulus.
+Chỉ bấm Generate mới sinh bộ khóa mới; đổi bản nháp chưa thay kịch bản đang xem.
+Không có cache chung chứa plaintext hoặc kịch bản của người dùng. Xem
+[UI design](docs/UI_DESIGN.md) và [deployment guide](docs/DEPLOYMENT.md).
 
 ## API và kiểm chứng
 

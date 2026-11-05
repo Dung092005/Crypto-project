@@ -121,3 +121,26 @@ giới hạn 5 MiB, filename chỉ là basename hiển thị. `PackageValidation
 tách lỗi format khỏi `DecryptionFailed` khi recipient/OAEP/GCM không xác thực.
 Không pickle, không thêm sender signature, replay protection hay persistence
 trong TASK 05; xem `SECURE_SHARING_DESIGN.md`.
+
+## D015 — Attack Lab UI chỉ trình bày, backend giữ nguyên
+
+`app.py` gọi các API TASK 02–03, không sửa toán học hoặc tái viết RSA/CRT.
+`attack_presenter.py` chỉ kiểm tra draft bytes, định dạng preview, semantic
+status và hàng bảng. `attack_observations` chỉ nhận `PublicObservation`; bộ
+đánh giá mới biết plaintext sau khi Eve đã tính ứng viên. `exact` không được
+trình bày là `recovered`. Full integers nằm trong expander.
+
+## D016 — Session state thay cho cache toàn cục
+
+Scenario, analyzer, attack và length sweep nằm trong `st.session_state` theo
+browser session. Generate mới sinh khóa và reset kết quả; thay widget chỉ rerun
+UI, không sinh khóa. Sweep tính theo yêu cầu một lần mỗi scenario. Không dùng
+`st.cache_data`/`st.cache_resource` cho plaintext hay dữ liệu khóa, tránh
+chia sẻ qua người dùng. Input UTF-8 giới hạn 190 byte và không tự cắt.
+
+## D017 — Cloud deploy từ branch đã review
+
+`app.py` tại root; `.streamlit/config.toml` dùng dark theme không tải tài
+nguyên ngoài; `requirements.txt` pin Streamlit/cryptography và cài package
+local. Cloud chọn Python 3.12 và nhánh chứa TASK 06 đã review, không dùng
+`main` cũ. Không deploy trong TASK 06; hướng dẫn/rollback ở `DEPLOYMENT.md`.

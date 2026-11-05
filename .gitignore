@@ -40,3 +40,4 @@ id_ed25519*
 *private-key*
 credentials*.json
 token*.json
+.streamlit/secrets.toml

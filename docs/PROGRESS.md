@@ -330,3 +330,68 @@ key persistence hoặc streaming trên 5 MiB. Filename chỉ là metadata hiển
 không là đường dẫn ghi file. Tests kiểm tra invariant với randomness thật,
 không tạo số liệu hiệu năng nghiên cứu. TASK 06 là Attack Lab Streamlit UI sau
 khi TASK 05 được review và giao riêng; academic report chưa thực hiện.
+
+## TASK 06 — Interactive Attack Lab UI (chờ reviewer xác nhận)
+
+Nhánh `feat/step-06-attack-ui` được tạo từ commit TASK 05 đã review
+`3e8b5249eb832899a22253b946683ada99792bbc`; working tree sạch trước khi sửa.
+Giữ nguyên API và code của các module mật mã TASK 01–05. `codebase-memory` không
+index repo này, nên đã đọc source thực tế. Áp dụng skill `developing-with-streamlit`
+với tài liệu khớp Streamlit 1.60.0 đã cài.
+
+### Acceptance criteria và thay đổi
+
+- `app.py`: Attack Lab gồm giới thiệu, sender simulator, ba recipient cards,
+  Eve chọn 1–3 ciphertext, walkthrough CRT/căn bậc ba, bảng bảy tập con và
+  sweep 1/96/180 byte. Dữ liệu tính bằng backend thật. Preset/custom UTF-8
+  tối đa 190 byte, không cắt ngắn. Eve chỉ nhận public observations; evaluator
+  được gọi sau để đối chiếu với plaintext. Trạng thái `exact` và `recovered`
+  tách riêng; điều kiện M³ < N gắn nhãn Experimenter.
+- Scenario, analysis, attack và sweep chỉ ở `st.session_state`. Generate mới
+  sinh khóa và reset kết quả; chọn widget không sinh khóa. Sweep chỉ tính theo
+  yêu cầu một lần mỗi scenario. Không có cache toàn cục dữ liệu người dùng.
+- `ui/attack_presenter.py` định dạng preview và bảng; `.streamlit/config.toml`
+  theme dark; `requirements.txt` pin runtime Cloud; `pyproject.toml` thêm
+  Streamlit; `.gitignore` bỏ qua secrets file. Tạo `UI_DESIGN.md`,
+  `DEPLOYMENT.md`; chưa deploy hoặc làm UI TASK 07–08.
+
+### Kiểm chứng thực tế
+
+- Python 3.12.10, Streamlit 1.60.0, cryptography 48.0.1. Lệnh
+  `.venv\Scripts\python.exe -X utf8 -m pip install --no-index --no-build-isolation -e ".[dev]"`
+  và `-r requirements.txt`: **PASS** với các dependencies đã có.
+- `tests/test_attack_ui.py` dùng `streamlit.testing.v1.AppTest`: **9 passed**.
+  Test thật startup, Generate, tập 1/2/3 ciphertext, threshold 1/96/180,
+  reset, input lỗi, bảy subset, sweep, wrong exact root và cô lập hai sessions.
+- Toàn bộ pytest lần cuối: **212 passed in 15.60s**. Lệnh trong venv (sandbox cần
+  TEMP/PYTHONPATH workaround ngoài repo như TASK 01):
+
+```powershell
+$taskTemp = (Resolve-Path '..\.task01-work\tmp').Path
+$env:TEMP=$taskTemp
+$env:TMP=$taskTemp
+$env:BROADCASTGUARD_TASK_TEMP=$taskTemp
+$env:PYTHONPATH=(Resolve-Path '..\.task01-work\runtime').Path
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
+.\.venv\Scripts\python.exe -X utf8 -m pytest -q -p no:cacheprovider --basetemp '..\.task01-work\tmp\pytest-task06-final3'
+```
+
+- Chạy riêng demo CLI 01–07: **cả bảy PASS**. `compileall -q broadcastguard
+  examples tests app.py`: **PASS**; import sáu module liên quan và Streamlit:
+  **PASS**; `git diff --check`: **PASS**.
+- `.venv\Scripts\python.exe -m streamlit run app.py --server.headless true
+  --server.port 8501`: server khởi động, `http://127.0.0.1:8501/_stcore/health`
+  trả **200 ok**, không có crash terminal. Không deploy lên Cloud.
+- Không có screenshot hoặc xác nhận bằng mắt: browser host của computer-use
+  không khả dụng; Playwright headless bị sandbox Windows từ chối tạo pipe
+  (`WinError 5`); lệnh khởi chạy Chrome headless bằng `Start-Process` bị
+  automatic approval review từ chối vì thao tác cần sandbox approval nhưng
+  loại approval đó bị tắt. AppTest và health check là bằng chứng runtime/UI.
+
+### Giới hạn
+
+Chưa kiểm tra trực quan desktop/mobile bằng browser thật trong môi trường này.
+Việc sinh ba khóa RSA trong Cloud vẫn có thể chậm khi tài nguyên hạn chế;
+spinner và yêu cầu bấm Generate giúp tránh tạo khóa trên mỗi rerun. Không có
+Defense UI, Secure Sharing UI, benchmark hoặc report. TASK 07 cần được giao
+riêng sau review TASK 06.

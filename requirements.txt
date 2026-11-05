@@ -1,0 +1,4 @@
+# Streamlit Community Cloud: install this project and pin tested runtime versions.
+-e .
+streamlit==1.60.0
+cryptography==48.0.1

@@ -45,11 +45,19 @@ wrapped keys. Package không chứa plaintext, AES key rõ hoặc private key.
 API từ chối package sai cấu trúc và lỗi xác thực riêng; không trả plaintext
 một phần. Filename chỉ dùng hiển thị, không quyết định đường dẫn ghi file.
 
+TASK 06 thêm Streamlit Attack Lab UI tại `app.py`. Người dùng chọn preset
+1/96/180 byte hoặc custom UTF-8 tối đa 190 byte, Generate tạo RSA scenario,
+Eve chọn 1–3 quan sát công khai và Run Attack. UI tách phép tính Eve khỏi bộ
+đánh giá biết plaintext, giải thích CRT/căn nguyên và hiển thị bảy subset cùng
+sweep độ dài. Kịch bản/attack/sweep chỉ trong session state; không cache toàn
+cục dữ liệu người dùng hoặc tự sinh khóa khi rerun. Cloud deployment chưa thực hiện.
+
 ## Stack
 
 Python >=3.11, standard library cho số học; pyca/cryptography cho RSA và OAEP;
-pytest cho test; setuptools và pyproject.toml để đóng gói. Streamlit dự kiến
-cho giao diện ở task sau, chưa cài vào runtime dependencies.
+Streamlit >=1.60 cho Attack Lab UI; pytest cho test; setuptools và pyproject.toml
+để đóng gói. Runtime Cloud pin trong `requirements.txt`; config theme ở
+`.streamlit/config.toml`. Defense/Secure Sharing UI thuộc task sau.
 Không Docker, database, server hay authentication trong bước này.
 
 ## Threat model và giả định mật mã
