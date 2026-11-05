@@ -7,11 +7,15 @@
   `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` on
   `feat/step-06-attack-ui`. `main` was subsequently fast-forwarded through
   docs commit `806ba9e972b10dd482c879766e963a80991c7440`.
-  TASK 07 review branch: `feat/step-07-defense-ui` (base is exact TASK 06 SHA).
+  TASK 07 branch: `feat/step-07-defense-ui` (base is exact TASK 06 SHA).
+  PR #1 was merged into `main` at
+  `48ab2e9d540bd2beb9759f13fd8149598bf1dc5b` after resolving the
+  three documentation conflicts with commit `806ba9e`.
 - **Completed:** TASK 01 package and arithmetic; TASK 02 public-only attack
   engine and evaluator; TASK 03 seven-subset analyzer and length sweep; TASK 04
   controlled RSA-OAEP Defense Lab; TASK 05 hybrid sharing; TASK 06 interactive
-  Attack Lab UI. TASK 07 adds Defense Lab UI and multipage routing, pending review.
+  Attack Lab UI. TASK 07 adds Defense Lab UI and multipage routing; integrated
+  through PR #1 after the reviewer-approved TASK 07 branch.
   Read `PROGRESS.md` for executed commands and outcomes.
 - **Architecture:** `math_core.py` owns CRT and exact integer roots;
   `attack_lab.py` separates builder, Eve, and ground-truth evaluator;
@@ -54,11 +58,11 @@
   TASK 09 experiments/analytics; TASK 10 testing/evaluation/completion.
   Each needs separate request/review. Academic report has not begun.
 - **Cloud readiness:** root `app.py`, pinned `requirements.txt`, dark theme,
-  session isolation, `DEPLOYMENT.md`. `main` đã được fast-forward chứa TASK 06
-  commit `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` qua docs commit
-  `806ba9e`. Select a reviewed branch containing TASK 07 after checking SHA;
-  user handles deployment. No public deployment performed. Browser visual
-  QA/screenshot was unavailable; AppTest and health check are separate evidence.
+  session isolation, `DEPLOYMENT.md`. `main` contains TASK 07 via PR #1 merge
+  commit `48ab2e9d540bd2beb9759f13fd8149598bf1dc5b`; verify the SHA
+  before selecting `main`. User handles deployment. No public deployment
+  performed. Browser visual QA/screenshot was unavailable; AppTest and health
+  check are separate evidence.
 - **Future decisions:** Keep attacker input public-only, report semantic statuses
   separately from UI colors, preserve byte length for leading zeros, and record
   actual seeds/versions/hardware/run artifacts when experiments begin.

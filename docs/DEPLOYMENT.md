@@ -21,12 +21,10 @@ là entrypoint từ repository root. Không cần `secrets.toml` cho hai lab.
 
 ## Triển khai Community Cloud sau khi reviewer đồng ý
 
-1. Xác minh commit đã review trên GitHub. `main` đã được fast-forward chứa
-   TASK 06 (`0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d`) và commit docs
-   `806ba9e972b10dd482c879766e963a80991c7440`. Để xem cả hai lab TASK 07,
-   chọn nhánh TASK 07 sau khi được review và tích hợp, hoặc `main` **chỉ khi**
-   đã xác minh `main` chứa commit TASK 07. Lịch sử trước đây `main` từng ở
-   TASK 02; không chọn branch theo tên mà bỏ qua SHA.
+1. Xác minh commit đã review trên GitHub. PR #1 đã đưa TASK 07 vào `main` bằng
+   merge commit `48ab2e9d540bd2beb9759f13fd8149598bf1dc5b`; chọn `main`
+   khi đã xác minh nhánh này chứa commit đó. Trước đây `main` từng ở TASK 02,
+   sau đó có commit docs `806ba9e`; không chọn branch theo tên mà bỏ qua SHA.
 2. Tại [share.streamlit.io](https://share.streamlit.io), chọn workspace của
    owner `Dung092005` → **Create app** → **Yup, I have an app**. Nhập repository
    `Dung092005/Crypto-project`, branch đã xác minh ở bước 1, main file path
