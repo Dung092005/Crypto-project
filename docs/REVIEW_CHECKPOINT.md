@@ -54,10 +54,11 @@
   TASK 09 experiments/analytics; TASK 10 testing/evaluation/completion.
   Each needs separate request/review. Academic report has not begun.
 - **Cloud readiness:** root `app.py`, pinned `requirements.txt`, dark theme,
-  session isolation, `DEPLOYMENT.md`. Select a reviewed branch containing TASK
-  07 after checking SHA; user handles deployment. No public deployment performed.
-  Browser visual QA/screenshot was unavailable in this environment; AppTest
-  and health check are separate evidence.
+  session isolation, `DEPLOYMENT.md`. `main` đã được fast-forward chứa TASK 06
+  commit `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` qua docs commit
+  `806ba9e`. Select a reviewed branch containing TASK 07 after checking SHA;
+  user handles deployment. No public deployment performed. Browser visual
+  QA/screenshot was unavailable; AppTest and health check are separate evidence.
 - **Future decisions:** Keep attacker input public-only, report semantic statuses
   separately from UI colors, preserve byte length for leading zeros, and record
   actual seeds/versions/hardware/run artifacts when experiments begin.

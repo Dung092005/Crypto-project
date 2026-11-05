@@ -396,6 +396,12 @@ spinner và yêu cầu bấm Generate giúp tránh tạo khóa trên mỗi rerun
 Defense UI, Secure Sharing UI, benchmark hoặc report. TASK 07 cần được giao
 riêng sau review TASK 06.
 
+**Cập nhật sau TASK 06:** Theo yêu cầu của người dùng, `main` được fast-forward
+từ `74e2a6c43a3997dd8fdfd90605a3079379227f2e` đến commit TASK 06
+`0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` và push lên GitHub; SHA
+remote đã xác minh trùng local. Hướng dẫn Cloud được cập nhật để chọn `main`
+khi nhánh đó còn chứa commit TASK 06. Chưa deploy app.
+
 ## TASK 07 — Defense Lab UI và multipage integration
 
 Baseline chính xác `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d`;
