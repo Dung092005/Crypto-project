@@ -15,6 +15,7 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -X utf8 examples\01_demo_de_hieu.py
 .\.venv\Scripts\python.exe -X utf8 examples\02_demo_rsa_2048.py
 .\.venv\Scripts\python.exe -X utf8 examples\03_demo_oaep.py
+.\.venv\Scripts\python.exe -X utf8 examples\04_attack_lab.py
 ```
 
 Không cần activate môi trường, đổi ExecutionPolicy hoặc quyền admin. Dùng
@@ -31,7 +32,8 @@ giai đoạn sau, chưa phải dependency của TASK 01.
 broadcastguard/           Python package
     __init__.py
     math_core.py          CRT, căn nguyên, mô phỏng tấn công, bytes ↔ integer
-examples/                 Ba demo CLI đã chuyển import từ starter
+    attack_lab.py         Kịch bản, Eve, bộ đánh giá thực nghiệm
+examples/                 Ba demo starter và demo Attack Lab mới
 tests/                    Unit tests và smoke tests chạy demo bằng subprocess
 docs/
     PROJECT_CONTEXT.md    Mục tiêu, phạm vi, threat model, acceptance criteria
@@ -66,6 +68,24 @@ coi là số nguyên hợp lệ. Chuyển bytes dùng big-endian không dấu; g
 để bảo toàn byte 0 đầu. `integer_to_message` yêu cầu độ dài dương và số vừa độ dài.
 Việc kiểm tra thông điệp `M < n` thuộc nơi gọi RSA, không thuộc hàm đổi bytes.
 
+TASK 02 thêm API trong `broadcastguard.attack_lab`:
+
+- `build_scenario(plaintext: bytes)` sinh ba RSA key pair 2048-bit/e=3, chỉ
+  trả plaintext thí nghiệm và ba `PublicObservation` gồm ID, `n`, `e`, `c`.
+  Public key và ciphertext đầy đủ được giữ trong cấu trúc; thuộc tính
+  `modulus_bits` và `ciphertext_preview` phù hợp hiển thị ngắn.
+- `attack_observations(observations)` nhận 1–3 quan sát công khai theo bất kỳ
+  tập con/thứ tự nào, trả `AttackOutcome`. Dữ liệu sai được mô tả trong `reason`;
+  trường hợp không có căn nguyên chính xác được báo riêng.
+- `evaluate_experiment(scenario, observed, outcome)` mới được xem plaintext,
+  kiểm tra `M**3 < product(moduli)` và trả `ExperimentEvaluation` với trạng thái
+  `recovered`, `wrong_exact_root`, `no_exact_root` hoặc `invalid_input`.
+  Nếu ứng viên vừa độ dài, `candidate_bytes` giữ nguyên byte `0x00` đầu.
+
+Module này chỉ mô phỏng Textbook RSA cố ý không an toàn. `AttackOutcome` không
+chứa plaintext hoặc private key. Lỗi không có căn chính xác không chứng minh
+Textbook RSA an toàn. Demo 04 dùng mẫu 180 byte để minh họa 1/2/3 bản mã.
+
 ```powershell
 .\.venv\Scripts\python.exe -c "import broadcastguard; import broadcastguard.math_core; print(broadcastguard.__version__)"
 .\.venv\Scripts\python.exe -m compileall -q broadcastguard examples tests
@@ -75,4 +95,4 @@ git diff --check
 Tests toán học dùng dữ liệu cố định; demo sinh khóa bằng nguồn ngẫu nhiên bảo mật,
 không ghi khóa ra đĩa. Không mong đợi ciphertext lặp lại giữa các lần chạy.
 Xem [bối cảnh dự án](docs/PROJECT_CONTEXT.md), [tiến độ](docs/PROGRESS.md) và
-[quyết định](docs/DECISIONS.md) trước khi tiếp tục. Dừng sau TASK 01 để review.
+[quyết định](docs/DECISIONS.md) trước khi tiếp tục. Mỗi task dừng để review.

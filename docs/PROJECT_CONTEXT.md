@@ -18,6 +18,12 @@ Ba màn hình dự kiến:
 TASK 01 chỉ bootstrap package, chuyển lõi và demo có sẵn, tests và tài liệu.
 Không xây các màn hình, AES/file sharing, analyzer giao diện, benchmark hay report.
 
+TASK 02 xây `attack_lab.py`: builder sinh ba RSA 2048-bit/e=3 và tạo public
+observations; Eve chỉ nhận quan sát công khai; evaluator riêng giữ plaintext
+để xác nhận kết quả. `AttackOutcome.exact` chỉ là tính chất căn nguyên, còn
+`ExperimentEvaluation.status` phân biệt khôi phục đúng, căn đúng nhưng sai
+plaintext, không có căn nguyên và đầu vào không hợp lệ. Chưa có giao diện.
+
 ## Stack
 
 Python >=3.11, standard library cho số học; pyca/cryptography cho RSA và OAEP;

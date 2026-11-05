@@ -45,3 +45,21 @@ commit cục bộ nếu chưa nhận được clone có lịch sử. Không kh�
 remote, không merge/push lịch sử độc lập lên GitHub. Khi có truy cập, cần clone
 repo thật, đọc quy tắc/code rồi áp dụng commit bằng cherry-pick hoặc patch có review.
 Remote URL cấu hình chỉ thể hiện đích dự kiến, không chứng minh truy cập được.
+
+## D007 — Attack Lab chia ba trách nhiệm
+
+`build_scenario` tạo khóa RSA thật, mã hóa cùng M và chỉ giữ public observations
+trong kết quả; private keys chỉ tồn tại trong phạm vi hàm. `attack_observations`
+nhận 1–3 `PublicObservation` theo bất kỳ tập con/thứ tự, không nhận scenario,
+plaintext hoặc private key. `evaluate_experiment` mới nhận scenario chứa
+plaintext và đối chiếu kết quả Eve với ground truth. Cách tách này giữ ranh giới
+threat model rõ cho sinh viên và cho UI sau này.
+
+## D008 — Kết quả toán học và đánh giá thực nghiệm là hai lớp dữ liệu
+
+`AttackOutcome` chứa các giá trị nguyên đầy đủ (`product`, `combined`,
+`candidate`) cùng `exact`, `reason`, `steps`; `PublicObservation` có thuộc tính
+preview để UI không phải in số 2048 bit. `ExperimentEvaluation` có bốn trạng
+thái riêng, điều kiện M³ < N và `candidate_bytes` theo độ dài bản gốc để giữ
+byte 0 đầu. Input sai trả reason từ attacker; evaluator từ chối ghép outcome
+với quan sát của run khác. Không thêm framework hay class chứa khóa bí mật.

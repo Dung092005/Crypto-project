@@ -15,7 +15,7 @@
   để làm demo xác định; test toán học dùng đầu vào cố định.
 - Không lưu/commit private key, credential, token, `.venv` hoặc dữ liệu nhạy cảm.
   Các demo chỉ giữ khóa trong RAM; không in private components.
-- Kiểm thử: `python -m pytest`, chạy ba demo theo README, kiểm tra import,
+- Kiểm thử: `python -m pytest`, chạy các demo theo README, kiểm tra import,
   compileall và git diff. `AttackResult.exact` không có nghĩa đã xác nhận plaintext.
 - Với truy vấn cấu trúc code, dùng skill `codebase-memory` nếu có; nếu graph chưa
   bao phủ, đọc source thực tế và ghi rõ giới hạn. Không index/cài công cụ lớn chỉ để bootstrap.
