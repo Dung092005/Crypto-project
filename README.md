@@ -4,8 +4,8 @@
 Attack Lab và bộ phân tích điều kiện. TASK 04 thêm Defense Lab so sánh Textbook
 RSA với RSA-OAEP trên cùng thông điệp, cùng ba khóa và cùng phép thử của Eve.
 TASK 05 bổ sung mã hóa file cho nhiều người nhận bằng AES-256-GCM và RSA-OAEP.
-TASK 06 thêm giao diện Streamlit tương tác cho Attack Lab. Defense UI và
-Secure Sharing UI chưa được triển khai.
+TASK 06 thêm giao diện Streamlit tương tác cho Attack Lab. TASK 07 thêm
+Defense Lab UI và điều hướng hai trang. Secure Sharing UI chưa được triển khai.
 
 ## Cài đặt trên Windows
 
@@ -46,7 +46,9 @@ broadcastguard/           Python package
     defense_lab.py        So sánh Textbook RSA / RSA-OAEP có kiểm soát
     hybrid_sharing.py     Mã hóa file nhiều người nhận, gói v1
     ui/attack_presenter.py Định dạng kết quả cho Attack Lab UI
-app.py                    Streamlit Attack Lab entrypoint
+app.py                    Streamlit entrypoint và router hai phòng thí nghiệm
+app_pages/                Trang Attack và Defense cho st.navigation
+broadcastguard/ui/        Presentation helpers và hai trang Streamlit
 .streamlit/config.toml    Theme dark
 requirements.txt          Runtime dependencies cho Community Cloud
 examples/                 Bảy demo CLI
@@ -104,6 +106,14 @@ chiếu riêng, bảng bảy tập con và phép quét độ dài dùng cùng b�
 Chỉ bấm Generate mới sinh bộ khóa mới; đổi bản nháp chưa thay kịch bản đang xem.
 Không có cache chung chứa plaintext hoặc kịch bản của người dùng. Xem
 [UI design](docs/UI_DESIGN.md) và [deployment guide](docs/DEPLOYMENT.md).
+
+TASK 07: dùng thanh điều hướng phía trên để chuyển giữa **Attack Lab** và
+**Defense Lab**. Ở Defense Lab chọn mẫu 1/96/180/190 byte hoặc nhập UTF-8,
+bấm **Run Defense Comparison**. Hai panel đối chiếu Textbook RSA với OAEP
+trên cùng ba khóa; bảng recipient, phép thử của Eve, quan sát ngẫu nhiên hóa
+và kết quả giải mã hợp lệ nằm bên dưới. Chuyển trang không xóa thí nghiệm
+trong cùng browser session; chỉ nút Run mới sinh bộ khóa Defense mới. Không
+có public deployment trong TASK 07.
 
 ## API và kiểm chứng
 

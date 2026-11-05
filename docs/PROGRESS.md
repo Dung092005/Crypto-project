@@ -401,3 +401,57 @@ từ `74e2a6c43a3997dd8fdfd90605a3079379227f2e` đến commit TASK 06
 `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` và push lên GitHub; SHA
 remote đã xác minh trùng local. Hướng dẫn Cloud được cập nhật để chọn `main`
 khi nhánh đó còn chứa commit TASK 06. Chưa deploy app.
+
+## TASK 07 — Defense Lab UI và multipage integration
+
+Baseline chính xác `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d`;
+working tree sạch trước khi tạo `feat/step-07-defense-ui`. `main` lúc bắt đầu
+ở docs commit `806ba9e`; không lấy nhánh này làm base.
+
+Acceptance criteria đã thực hiện: `app.py` chỉ làm router `st.Page` +
+`st.navigation` ở top; Attack Lab TASK 06 được chuyển sang `ui/attack_page.py`
+và giữ nguyên tương tác; Defense Lab mới gọi `run_defense_comparison()` thật.
+Hai panel đọc status thực tế, bảng ba public moduli chứng minh dùng cùng keys,
+Eve thử cùng CRT/root, randomization và ba trạng thái giải mã hợp lệ. Input
+1/96/180/190 byte hoặc UTF-8, reject rỗng/>190 byte. State Defense tách khỏi
+Attack, không cache key/plaintext và không sinh khóa khi chỉ rerun/chuyển trang.
+Không sửa API mật mã TASK 01–05.
+
+Kiểm chứng thực tế:
+
+- `tests/test_attack_ui.py`: **9 passed** sau refactor multipage.
+- `tests/test_defense_ui.py`: **8 passed**; AppTest kiểm tra startup, điều
+  hướng, validation, cùng moduli/e=3, Textbook recovered, OAEP không recovered
+  trong run, randomization, giải mã 3 người nhận, 190/191 byte, state qua
+  hai trang, custom UTF-8, không sinh lại key khi rerun, cô lập hai sessions.
+- Full suite: **220 passed in 27.57s**. Lần đầu 212 passed + 7 errors ở
+  `tests/test_examples.py` do pytest không được tạo temp tại Windows Temp
+  (`WinError 5`); chạy lại với basetemp trong workspace thì toàn bộ PASS.
+
+```powershell
+$taskTemp = (Resolve-Path '..\.task01-work\tmp').Path
+$taskRuntime = (Resolve-Path '..\.task01-work\runtime').Path
+$env:TEMP=$taskTemp; $env:TMP=$taskTemp
+$env:BROADCASTGUARD_TASK_TEMP=$taskTemp; $env:PYTHONPATH=$taskRuntime
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'; $env:PYTHONIOENCODING='utf-8'
+.\.venv\Scripts\python.exe -X utf8 -m pytest -q -p no:cacheprovider --basetemp '..\.task01-work\tmp\pytest-task07-final2'
+```
+
+- `examples/01_demo_de_hieu.py` đến `07_hybrid_sharing.py` chạy riêng:
+  **7/7 PASS**. `compileall -q app.py app_pages broadcastguard examples tests`:
+  **PASS**; import Streamlit và các module backend/UI: **PASS**.
+- `python -m streamlit run app.py --server.headless true --server.port 8503`:
+  server khởi động; `GET /_stcore/health` trả **200 ok**. `git diff --check`:
+  **PASS** trước commit. AppTest kiểm chứng luồng UI; browser host CUA không
+  khả dụng nên **chưa** visual QA bằng trình duyệt/screenshot.
+- Chạy riêng `run_defense_comparison(b"B" * 180)`: cùng moduli `True`,
+  Textbook `recovered`/exact root `True`, OAEP `no_exact_root` trong run này,
+  giải mã `[True, True, True]`, randomization flags đều `True`.
+- `pip check` trong venv hiện tại **không PASS** vì các package nghiên cứu
+  ngoài BroadcastGuard có constraint xung đột (protobuf, pyopenssl, ragas,
+  sentence-transformers). Không thay đổi dependency dự án để sửa môi trường
+  ngoài phạm vi; `pytest`, demos, imports và runtime đều PASS.
+
+TASK 08 Secure Sharing UI chưa làm; không làm benchmark/report hoặc public
+deployment ở TASK 07. Reviewer cần kiểm tra branch và UI thực tế trước khi
+người dùng triển khai Cloud.
