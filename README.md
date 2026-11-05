@@ -1,7 +1,8 @@
 # BroadcastGuard
 
-Ứng dụng giáo dục mật mã cho project giữa kỳ. TASK 01 chuẩn hóa package Python,
-tái sử dụng lõi toán học và ba demo starter, bổ sung kiểm thử và bối cảnh dự án.
+Ứng dụng giáo dục mật mã cho project giữa kỳ. Các bước 01–03 xây lõi toán học,
+Attack Lab và bộ phân tích điều kiện. TASK 04 thêm Defense Lab so sánh Textbook
+RSA với RSA-OAEP trên cùng thông điệp, cùng ba khóa và cùng phép thử của Eve.
 Chưa có giao diện hoặc chức năng mã hóa file.
 
 ## Cài đặt trên Windows
@@ -17,6 +18,7 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -X utf8 examples\03_demo_oaep.py
 .\.venv\Scripts\python.exe -X utf8 examples\04_attack_lab.py
 .\.venv\Scripts\python.exe -X utf8 examples\05_conditions_analyzer.py
+.\.venv\Scripts\python.exe -X utf8 examples\06_defense_lab.py
 ```
 
 Không cần activate môi trường, đổi ExecutionPolicy hoặc quyền admin. Dùng
@@ -35,12 +37,14 @@ broadcastguard/           Python package
     math_core.py          CRT, căn nguyên, mô phỏng tấn công, bytes ↔ integer
     attack_lab.py         Kịch bản, Eve, bộ đánh giá thực nghiệm
     conditions_analyzer.py Phân tích bảy tập người nhận và quét độ dài
-examples/                 Năm demo CLI
+    defense_lab.py        So sánh Textbook RSA / RSA-OAEP có kiểm soát
+examples/                 Sáu demo CLI
 tests/                    Unit tests và smoke tests chạy demo bằng subprocess
 docs/
     PROJECT_CONTEXT.md    Mục tiêu, phạm vi, threat model, acceptance criteria
     PROGRESS.md           Kết quả thực tế và việc còn tồn đọng
     DECISIONS.md          Quyết định kiến trúc và lý do
+    REVIEW_CHECKPOINT.md Bàn giao trạng thái đã kiểm chứng
 AGENTS.md                 Quy tắc tiếp tục công việc cho coding agent
 pyproject.toml            Packaging, dependencies và pytest
 ```
@@ -55,8 +59,11 @@ pyproject.toml            Packaging, dependencies và pytest
   Ví dụ `M=2, n=7, e=3`: bản mã bằng 1 có căn chính xác bằng 1, nhưng không phải M.
 - Không khẳng định luôn cần ba bản mã: M nhỏ có thể chỉ cần một hoặc hai.
   Khi phương pháp CRT-and-root thất bại, chưa thể kết luận Textbook RSA an toàn.
-- Demo OAEP giữ e=3 để so sánh tác động của padding; dùng SHA-256 và MGF1-SHA256
-  từ thư viện. Đây chỉ là phép thử cách tấn công trên mẫu đã chọn.
+- Defense Lab giữ e=3 và cùng ba cặp khóa RSA-2048 cho cả hai mode. OAEP dùng
+  SHA-256, MGF1-SHA256 và label rỗng từ `cryptography`, tối đa 190 byte.
+  Eve dùng lại CRT + căn bậc ba trên cả hai bộ quan sát. OAEP mã hóa ngẫu nhiên
+  trước RSA, nên điều kiện `M³ < N` của Textbook RSA không giải thích kết quả
+  OAEP. Sự thất bại của phép thử này không chứng minh an toàn tuyệt đối.
 - Textbook RSA chỉ dành cho attack lab. Secure Sharing sau này dùng
   AES-256-GCM + RSA-OAEP và RSA e=65537, không tái sử dụng Textbook RSA.
 
@@ -103,6 +110,19 @@ TASK 03 thêm `broadcastguard.conditions_analyzer`:
 
 Số byte không đủ để suy ra khả năng khôi phục: cần xét giá trị M và tích
 modulus của tập người nhận cụ thể. `wrong_exact_root` khác `recovered`.
+
+TASK 04 thêm `broadcastguard.defense_lab.run_defense_comparison(plaintext)`.
+Hàm sinh đúng một bộ ba khóa RSA trong RAM, mã hóa cùng bytes bằng Textbook RSA
+và RSA-OAEP, rồi trả `DefenseComparison` với `summary_rows()`,
+`recipient_rows()` và `detail_rows()` cho UI tương lai. Kết quả giữ scheme của
+từng ciphertext, trạng thái Eve và trạng thái giải mã OAEP của từng người nhận.
+`private_keys` tùy chọn chỉ phục vụ thí nghiệm/kiểm thử có kiểm soát và không
+được lưu trong kết quả. `randomization_trials` minh họa Textbook RSA lặp lại
+cùng bản mã còn các lần OAEP tạo bản mã khác nhau.
+
+Giới hạn OAEP theo [RFC 8017 §7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1):
+`mLen <= k - 2*hLen - 2`, với RSA-2048 (`k=256`) và SHA-256 (`hLen=32`) là
+190 byte. OAEP trong dự án dùng `label=None` (nhãn rỗng).
 
 ```powershell
 .\.venv\Scripts\python.exe -c "import broadcastguard; import broadcastguard.math_core; print(broadcastguard.__version__)"

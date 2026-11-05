@@ -81,3 +81,22 @@ hoặc M không nhỏ hơn mọi modulus. Không sửa API toán học và Attac
 chọn màu. Lời giải thích có nhãn `Experimenter` nếu dùng M³ < N. Với ba
 modulus hợp lệ cùng lớn hơn M, tích của cả ba chắc chắn lớn hơn M³; tuy vậy
 thuộc tính minimum vẫn trả `None` cho tập kết quả rỗng/bị lọc.
+
+## D011 — So sánh OAEP bằng cùng khóa, cùng Eve và evaluator riêng
+
+`run_defense_comparison` sinh đúng một bộ ba RSA-2048/e=3 trong RAM rồi dùng
+cùng plaintext, người nhận và public moduli cho Textbook RSA và RSA-OAEP.
+OAEP dùng API `cryptography` với SHA-256, MGF1(SHA-256), label=None; không
+tự viết encoding. Mỗi observation có scheme rõ ràng. Cả hai mode đều gọi
+`attack_observations` với dữ liệu công khai. Bộ đánh giá Defense Lab so sánh
+ứng viên với M riêng; không gọi evaluator Textbook RSA để suy luận OAEP từ
+`M³ < N`. Kết quả chỉ giữ public numbers, ciphertext, trạng thái và preview;
+private keys chỉ sống trong phạm vi điều phối và giải mã.
+
+## D012 — Ghi nhận ngẫu nhiên hóa như một quan sát thực nghiệm
+
+Lặp mã hóa trên cùng public key và plaintext, kiểm tra các ciphertext OAEP
+quan sát được khác nhau và vẫn giải mã đúng; Textbook RSA lặp lại đúng cùng
+ciphertext. Không seed CSPRNG, không dùng snapshot ciphertext, không coi vài
+lần thử là chứng minh bảo mật. TASK 05 dùng e=65537 cho Secure Sharing và
+không tái sử dụng phép Textbook RSA ở đây.

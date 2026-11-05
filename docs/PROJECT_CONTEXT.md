@@ -30,6 +30,13 @@ so sánh dự đoán M³ < N với ứng viên Eve khôi phục và có trạng 
 căn chính xác nhưng sai M. Tất cả giải thích dùng M được gắn nhãn là góc nhìn
 người đánh giá, không phải tri thức của Eve. Chưa có giao diện hoặc phép đo hiệu năng.
 
+TASK 04 thêm RSA-OAEP Defense Lab. Một lần chạy dùng cùng plaintext bytes và
+cùng ba keypair RSA-2048/e=3 cho Textbook RSA và OAEP-SHA256/MGF1-SHA256,
+label rỗng. Chỉ cách mã hóa thay đổi; Eve dùng cùng CRT + căn bậc ba với ba
+quan sát công khai. Bộ đánh giá tách riêng so sánh ứng viên với plaintext,
+không dùng điều kiện Textbook `M³ < N` để diễn giải OAEP. Private keys chỉ nằm
+trong RAM lúc tạo và giải mã thí nghiệm, không nằm trong dữ liệu trả về.
+
 ## Stack
 
 Python >=3.11, standard library cho số học; pyca/cryptography cho RSA và OAEP;
@@ -48,7 +55,10 @@ Không Docker, database, server hay authentication trong bước này.
   Chỉ môi trường thử nghiệm mới so sánh với bản gốc đã biết.
 - Thiếu điều kiện hoặc thất bại một phương pháp không chứng minh hệ thống an toàn.
 - OAEP của thư viện dùng SHA-256 và MGF1-SHA256; demo dùng RSA 2048 bit e=3
-  để tách tác động của padding. Với cấu hình này, giới hạn plaintext là 190 byte.
+  để tách tác động của padding. Với cấu hình này, giới hạn plaintext là 190 byte
+  theo `mLen <= k - 2*hLen - 2` của [RFC 8017 §7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1).
+  OAEP mã hóa ngẫu nhiên thành các representative khác nhau trước RSA; không thể
+  suy ra kết quả OAEP từ bất đẳng thức dành cho cùng một M của Textbook RSA.
 - Chia sẻ an toàn sau này giả định public keys người nhận đã được xác thực trước.
   Chưa xử lý phân phối/chứng thực public keys qua mạng, danh tính người gửi,
   replay, thu hồi khóa hoặc bảo vệ endpoint bị chiếm quyền. AES-GCM không tự

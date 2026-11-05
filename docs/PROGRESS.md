@@ -205,3 +205,61 @@ Giá trị khóa RSA demo ngẫu nhiên, không dùng làm benchmark. Với ba m
 lệ mỗi modulus đều lớn hơn M, tập cả ba luôn thỏa M³ < N, nên no-success chỉ
 áp dụng khi tổng hợp một tập kết quả bị lọc/rỗng. Chưa có UI, AES-GCM, report
 hay thí nghiệm hiệu năng. `REVIEW_CHECKPOINT.md` là tài liệu bàn giao ngắn.
+
+## TASK 04 — RSA-OAEP Defense Lab (chờ reviewer xác nhận)
+
+Nhánh `feat/step-04-oaep-defense` được tạo từ TASK 03 đã review, SHA
+`3ef78b63877017f0e92a1f71f1eab1ef2dab0569`. Trước khi sửa, working tree
+sạch, HEAD khớp SHA này và remote là `Dung092005/Crypto-project.git`.
+
+### Acceptance criteria và thay đổi thực tế
+
+- `defense_lab.py` tạo đúng một bộ ba keypair RSA-2048/e=3 trong RAM cho cả
+  Textbook RSA và RSA-OAEP. Cùng plaintext, người nhận, khóa, tập ba ciphertext
+  và `attack_observations()`; chỉ scheme mã hóa thay đổi. Có kiểm tra kiểu,
+  rỗng, giới hạn OAEP 190 byte, `M < n_i`, e/bit length và moduli đôi một coprime.
+- OAEP dùng `cryptography` SHA-256/MGF1(SHA-256), label=None theo RFC 8017.
+  `SchemeObservation` gắn nhãn scheme với dữ liệu công khai. Bộ đánh giá riêng
+  chỉ sau Eve mới so sánh ứng viên với M; không áp dụng bound Textbook cho OAEP.
+  `exact=True` không tự đồng nghĩa khôi phục đúng.
+- Người nhận hợp lệ giải mã OAEP bằng private key tương ứng trong RAM; kết quả
+  chỉ giữ trạng thái của Alice/Bob/Charlie. Thử lặp OAEP cùng plaintext/key,
+  ghi ciphertext có khác và từng lần có giải mã đúng; Textbook RSA lặp lại.
+- `DefenseComparison` trả summary, per-recipient và detail rows cho UI sau.
+  Tạo CLI demo 06, tests và cập nhật README/context/decisions/checkpoint.
+  Không sửa API hoặc code của TASK 01–03, không xây UI/AES/report.
+
+### Kiểm chứng đã chạy
+
+- Python 3.12.10, Windows; venv dùng workaround ACL tạm ngoài repo như TASK 01.
+  Lệnh suite cuối:
+
+```powershell
+$taskTemp = (Resolve-Path '..\.task01-work\tmp').Path
+$env:TEMP=$taskTemp
+$env:TMP=$taskTemp
+$env:BROADCASTGUARD_TASK_TEMP=$taskTemp
+$env:PYTHONPATH=(Resolve-Path '..\.task01-work\runtime').Path
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
+.\.venv\Scripts\python.exe -X utf8 -m pytest -q -p no:cacheprovider --basetemp '..\.task01-work\tmp\pytest-task04-final2'
+```
+
+  Kết quả cuối: **162 passed in 4.40s**; bao gồm smoke tests của demo 01–06.
+- Chạy riêng `python -X utf8 examples/<01..06>.py` bằng venv: **cả sáu PASS**.
+  Demo 06 với 180 byte: Textbook RSA có `exact=True`, khôi phục M;
+  OAEP có `exact=False`, không khôi phục M; Alice/Bob/Charlie đều giải mã
+  đúng. Ba ciphertext OAEP lặp cùng khóa khác nhau, tất cả giải mã đúng;
+  hai lần Textbook RSA cho cùng ciphertext. Đây là một run, không phải benchmark.
+- `.venv\Scripts\python.exe -m compileall -q broadcastguard examples tests`:
+  **PASS**. Import `math_core`, `attack_lab`, `conditions_analyzer`,
+  `defense_lab`: **PASS**. `git diff --check`: **PASS**.
+- Kiểm tra file staged và mẫu private key/token trước commit; trạng thái GitHub
+  và SHA remote được đối chiếu riêng sau push.
+
+### Giới hạn
+
+Kết quả OAEP ngẫu nhiên có thể khác ở lần chạy khác, nên tests kiểm tra invariant,
+không so ciphertext cố định. Không suy ra an toàn tuyệt đối từ thất bại của
+CRT-and-root. Phép thử e=3 chỉ để cô lập tác động padding; Secure Sharing ở
+TASK 05 sẽ dùng e=65537 sau khi được giao riêng. Chưa có UI, AES-GCM, report
+hoặc số liệu nghiên cứu/hiệu năng.

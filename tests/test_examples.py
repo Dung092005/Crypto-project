@@ -14,6 +14,7 @@ import pytest
     ("03_demo_oaep.py", "Cả ba người nhận có giải mã được không: True"),
     ("04_attack_lab.py", "Eve thu 3 bản mã"),
     ("05_conditions_analyzer.py", "Attack Conditions Analyzer"),
+    ("06_defense_lab.py", "RSA-OAEP Defense Lab"),
 ])
 def test_demo_runs_with_installed_package(filename: str, expected: str, tmp_path: Path) -> None:
     script = Path(__file__).resolve().parents[1] / "examples" / filename
@@ -33,4 +34,7 @@ def test_demo_runs_with_installed_package(filename: str, expected: str, tmp_path
     if filename == "05_conditions_analyzer.py":
         assert "\n 180 " in result.stdout
         assert "Tối thiểu" in result.stdout
+    if filename == "06_defense_lab.py":
+        assert "Tất cả lần OAEP đều giải mã đúng: True" in result.stdout
+        assert "chứng minh an toàn tuyệt đối" in result.stdout
     assert list(tmp_path.iterdir()) == []
