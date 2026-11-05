@@ -1,0 +1,42 @@
+# Python and local environments
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Generated data, local runs, and editor state
+artifacts/
+outputs/
+data/generated/
+*.log
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Credentials and private key material
+.env
+.env.*
+!.env.example
+secrets/
+private_keys/
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.der
+id_rsa*
+id_ed25519*
+*private_key*
+*private-key*
+credentials*.json
+token*.json
