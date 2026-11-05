@@ -36,5 +36,23 @@ nhãn. Eve's computation chỉ có số công khai; điều kiện `M³ < N` đ�
 là xác minh của người đánh giá. Một lần thử không lấy được M không chứng minh
 Textbook RSA an toàn. Thông điệp binary dùng hex preview thay vì văn bản lỗi.
 
-TASK 06 không có Defense UI, Secure Sharing UI hoặc benchmark. Xem
-`DEPLOYMENT.md` cho hướng dẫn Cloud sau khi nhánh được reviewer chấp thuận.
+TASK 06 không có Defense UI, Secure Sharing UI hoặc benchmark. TASK 07 bổ
+sung Defense UI; xem `DEPLOYMENT.md` trước khi người dùng tự triển khai Cloud.
+
+## Multipage và Defense Lab · TASK 07
+
+`app.py` là router `st.navigation` với top navigation Attack Lab mặc định và
+Defense Lab. Hai file trong `app_pages/` chỉ gọi hàm render tương ứng; CSS và
+theme dùng chung. Không đặt phép RSA/OAEP trong router. Các keys Defense
+`defense_comparison`, `defense_run_number` tách khỏi state Attack; cả hai được
+giữ trong cùng phiên khi đổi trang. Widget input chỉ là bản nháp cho đến khi
+bấm Run. Không cache global dữ liệu nhạy cảm hoặc khóa.
+
+Defense Lab đi theo trình tự: chọn plaintext → hai panel Textbook/OAEP đọc
+trạng thái thật → bảng ba public keys dùng chung → Eve thử cùng CRT/root →
+randomization → ba người nhận giải mã → bài học. Cyan/teal biểu thị người
+nhận và giải mã hợp lệ, red/pink nhấn mạnh rủi ro Textbook/Eve, amber cho
+căn nguyên chính xác nhưng sai thông điệp. Số 2048-bit nằm trong expander;
+panel và bảng dùng preview. Màu là cách trình bày, không nằm trong backend.
+OAEP ciphertext luôn được gắn scheme; điều kiện Textbook `M³ < N` chỉ thuộc
+phần experimenter. UI không nói một run thất bại là chứng minh bảo mật.

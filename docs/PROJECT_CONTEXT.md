@@ -87,6 +87,15 @@ Không Docker, database, server hay authentication trong bước này.
 
 ## Quy tắc bảo mật và tái lập
 
+TASK 07 trình bày hai phòng thí nghiệm qua `app.py` và `st.navigation`.
+Attack Lab giữ Scenario/Outcome trong `st.session_state` hiện có; Defense Lab
+giữ `DefenseComparison` và run number trong keys riêng cùng browser session.
+`run_defense_comparison()` dùng cùng plaintext, ba RSA-2048/e=3 keypairs và
+cùng phép CRT-and-root cho hai mode, chỉ đổi Textbook RSA sang OAEP-SHA256.
+Private keys chỉ tồn tại bên trong orchestration, không xuất hiện trong UI
+state. OAEP randomization là quan sát thực nghiệm; `exact_root` phải được
+đối chiếu riêng với plaintext gốc. Entrypoint Cloud vẫn là `app.py`.
+
 Textbook RSA nằm riêng trong attack lab; không được gọi để bảo vệ file thật.
 Không tự viết OAEP/AES/bộ sinh số nguyên tố. Không ghi private key ra đĩa hoặc
 log; mọi khóa demo chỉ tồn tại trong RAM. Ignore credential, môi trường và output.

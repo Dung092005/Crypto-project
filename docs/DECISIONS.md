@@ -142,5 +142,24 @@ chia sẻ qua người dùng. Input UTF-8 giới hạn 190 byte và không tự 
 
 `app.py` tại root; `.streamlit/config.toml` dùng dark theme không tải tài
 nguyên ngoài; `requirements.txt` pin Streamlit/cryptography và cài package
-local. Cloud chọn Python 3.12 và nhánh chứa TASK 06 đã review, không dùng
-`main` cũ. Không deploy trong TASK 06; hướng dẫn/rollback ở `DEPLOYMENT.md`.
+local. Cloud chọn Python 3.12 và nhánh đã review. `main` từng ở TASK 02,
+nhưng sau TASK 06 đã được fast-forward chứa `0dc6ad3`; luôn xác minh SHA
+trước khi chọn branch. Không deploy trong TASK 06–07; xem `DEPLOYMENT.md`.
+
+## D018 — Một router chính thức, hai lab tách presentation
+
+`app.py` chỉ đặt page config, CSS tĩnh và `st.navigation`/`st.Page` rồi chạy
+trang được chọn. Attack Lab TASK 06 được chuyển nguyên luồng vào
+`ui/attack_page.py`; `app_pages/` chỉ gọi hàm render. Defense Lab dùng
+`ui/defense_page.py` và pure helpers trong `ui/defense_presenter.py`, gọi
+`run_defense_comparison()` đã review, không làm mật mã trong router. Top
+navigation phù hợp khi mới có hai trang và giữ `app.py` làm Cloud entrypoint.
+
+## D019 — State theo phòng thí nghiệm, không cache bí mật
+
+Giữ keys Attack hiện có để không phá compatibility; Defense dùng prefix
+`defense_`. `DefenseComparison` chỉ gồm public observations và kết quả đánh
+giá/giải mã, không có private keys. Chỉ bấm Run mới sinh ba khóa; điều hướng,
+thay bản nháp và mở chi tiết không gọi lại crypto. Panel đọc status thật
+(`recovered`, `wrong_exact_root`, `no_exact_root`, `invalid_input`) và tách
+Eve computation khỏi experimenter verification. Không dùng cache toàn cục.

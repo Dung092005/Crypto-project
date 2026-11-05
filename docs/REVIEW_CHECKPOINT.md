@@ -3,14 +3,15 @@
 - **Project:** Educational RSA Broadcast Attack, OAEP defense, and secure
   hybrid file sharing. See `PROJECT_CONTEXT.md` for scope and threat model.
 - **Repository:** `https://github.com/Dung092005/Crypto-project.git`.
-  TASK 01–05 approved by reviewer. Verified TASK 05 baseline:
-  `3e8b5249eb832899a22253b946683ada99792bbc` on
-  `feat/step-05-hybrid-sharing`. TASK 06 review branch:
-  `feat/step-06-attack-ui`; verify final SHA with `git log -1`.
+  TASK 01–06 approved by reviewer. Verified TASK 06 baseline:
+  `0dc6ad3a8f6bf9cd5abb79ab7ee681d3a2af268d` on
+  `feat/step-06-attack-ui`. `main` was subsequently fast-forwarded through
+  docs commit `806ba9e972b10dd482c879766e963a80991c7440`.
+  TASK 07 review branch: `feat/step-07-defense-ui` (base is exact TASK 06 SHA).
 - **Completed:** TASK 01 package and arithmetic; TASK 02 public-only attack
   engine and evaluator; TASK 03 seven-subset analyzer and length sweep; TASK 04
-  controlled RSA-OAEP Defense Lab; TASK 05 hybrid sharing. TASK 06 interactive
-  Attack Lab UI is implemented on the review branch, pending review.
+  controlled RSA-OAEP Defense Lab; TASK 05 hybrid sharing; TASK 06 interactive
+  Attack Lab UI. TASK 07 adds Defense Lab UI and multipage routing, pending review.
   Read `PROGRESS.md` for executed commands and outcomes.
 - **Architecture:** `math_core.py` owns CRT and exact integer roots;
   `attack_lab.py` separates builder, Eve, and ground-truth evaluator;
@@ -24,8 +25,10 @@
   `serialize_package`, `deserialize_package`, `decrypt_file_for_recipient`,
   `attempt_decrypt_file_for_recipient`, `summarize_package`. See
   `SECURE_SHARING_DESIGN.md` for data flows.
-  TASK 06 adds `app.py` and `ui/attack_presenter.py`; UI calls reviewed Attack
-  Lab/Conditions APIs and retains scenario/results per Streamlit session.
+  `app.py` routes with `st.Page`/`st.navigation` to Attack and Defense pages;
+  `ui/attack_page.py` retains TASK 06 behavior. `ui/defense_page.py` calls
+  reviewed `run_defense_comparison()`; `ui/defense_presenter.py` formats
+  summaries. Lab results use distinct session keys and no global crypto cache.
 - **Cryptographic assumptions:** Same integer M, e=3, pairwise-coprime moduli,
   `M < n_i`, Textbook RSA deliberately insecure. Eve knows `(n,e,c)` only.
   `exact_root` does not imply recovered M. Evaluator-only bound is `M³ < N`.
@@ -37,21 +40,24 @@
   format v1 canonical JSON header as AAD. Public keys must be authenticated
   beforehand. Fingerprints do not prove identity; no sender authentication or
   replay protection is provided.
-- **Testing:** TASK 05 baseline: 203 passed. TASK 06: 9 AppTest UI tests and
-  212 total tests passed; CLI examples 01–07, compileall, imports and runtime
-  health results are recorded in `PROGRESS.md`. Python 3.12.10 / Streamlit 1.60.0 /
-  cryptography 48.0.1; local Windows
-  sandbox requires the temporary ACL workaround documented there. No benchmark
-  claims are based on these engineering checks.
+- **Testing:** TASK 06 baseline: 212 tests including 9 Attack AppTests. TASK 07:
+  220 passed including 8 new Defense AppTests; CLI examples 01–07, compileall,
+  imports and local Streamlit health 200 passed. See `PROGRESS.md` for commands.
+  Python 3.12 / Streamlit 1.60.0 / cryptography 48.0.1. The Windows sandbox
+  needs an in-workspace pytest temporary directory. No benchmark claim.
+  Existing unrelated research packages make `pip check` fail in this shared
+  venv; the project tests and local runtime passed. Browser visual QA is pending.
 - **Technical debt:** In-memory demo private keys only, 5 MiB whole-file limit;
   no streaming, certificate/key distribution, sender signature, replay defense,
   network or persistence. Filename is display-only, never a trusted output path.
-- **Next planned tasks:** TASK 07 Defense Lab UI; TASK 08 Secure Sharing UI;
+- **Next planned tasks:** TASK 08 Secure Sharing UI;
   TASK 09 experiments/analytics; TASK 10 testing/evaluation/completion.
   Each needs separate request/review. Academic report has not begun.
 - **Cloud readiness:** root `app.py`, pinned `requirements.txt`, dark theme,
-  session isolation, `DEPLOYMENT.md`. Deploy from reviewed TASK 06 branch or
-  integration branch, never outdated `main`. No public deployment performed.
+  session isolation, `DEPLOYMENT.md`. Select a reviewed branch containing TASK
+  07 after checking SHA; user handles deployment. No public deployment performed.
+  Browser visual QA/screenshot was unavailable in this environment; AppTest
+  and health check are separate evidence.
 - **Future decisions:** Keep attacker input public-only, report semantic statuses
   separately from UI colors, preserve byte length for leading zeros, and record
   actual seeds/versions/hardware/run artifacts when experiments begin.
