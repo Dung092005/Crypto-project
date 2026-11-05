@@ -24,6 +24,12 @@ observations; Eve chỉ nhận quan sát công khai; evaluator riêng giữ plai
 `ExperimentEvaluation.status` phân biệt khôi phục đúng, căn đúng nhưng sai
 plaintext, không có căn nguyên và đầu vào không hợp lệ. Chưa có giao diện.
 
+TASK 03 thêm Attack Conditions Analyzer: xét bảy tập con không rỗng của ba
+người nhận và quét các thông điệp `b"B" * length` với cùng bộ modulus. Kết quả
+so sánh dự đoán M³ < N với ứng viên Eve khôi phục và có trạng thái riêng cho
+căn chính xác nhưng sai M. Tất cả giải thích dùng M được gắn nhãn là góc nhìn
+người đánh giá, không phải tri thức của Eve. Chưa có giao diện hoặc phép đo hiệu năng.
+
 ## Stack
 
 Python >=3.11, standard library cho số học; pyca/cryptography cho RSA và OAEP;

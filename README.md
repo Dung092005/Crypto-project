@@ -16,6 +16,7 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -X utf8 examples\02_demo_rsa_2048.py
 .\.venv\Scripts\python.exe -X utf8 examples\03_demo_oaep.py
 .\.venv\Scripts\python.exe -X utf8 examples\04_attack_lab.py
+.\.venv\Scripts\python.exe -X utf8 examples\05_conditions_analyzer.py
 ```
 
 Không cần activate môi trường, đổi ExecutionPolicy hoặc quyền admin. Dùng
@@ -33,7 +34,8 @@ broadcastguard/           Python package
     __init__.py
     math_core.py          CRT, căn nguyên, mô phỏng tấn công, bytes ↔ integer
     attack_lab.py         Kịch bản, Eve, bộ đánh giá thực nghiệm
-examples/                 Ba demo starter và demo Attack Lab mới
+    conditions_analyzer.py Phân tích bảy tập người nhận và quét độ dài
+examples/                 Năm demo CLI
 tests/                    Unit tests và smoke tests chạy demo bằng subprocess
 docs/
     PROJECT_CONTEXT.md    Mục tiêu, phạm vi, threat model, acceptance criteria
@@ -86,6 +88,22 @@ Module này chỉ mô phỏng Textbook RSA cố ý không an toàn. `AttackOutco
 chứa plaintext hoặc private key. Lỗi không có căn chính xác không chứng minh
 Textbook RSA an toàn. Demo 04 dùng mẫu 180 byte để minh họa 1/2/3 bản mã.
 
+TASK 03 thêm `broadcastguard.conditions_analyzer`:
+
+- `analyze_scenario(scenario)` xét bảy tập con của Alice, Bob, Charlie theo
+  thứ tự xác định. `SubsetAnalysis` giữ N, X, căn ứng viên, trạng thái căn,
+  điều kiện M³ < N, kết quả đối chiếu và lời giải thích gắn nhãn Experimenter.
+  `ScenarioAnalysis.table_rows()` xuất dict đơn giản.
+- `sweep_message_lengths(base_scenario, lengths=(1, 96, 180))` mã hóa lại
+  `b"B" * length` bằng cùng ba public moduli. `LengthSweep.matrix_rows()`,
+  `minimum_rows()` và `comparison_rows()` chuẩn bị dữ liệu cho UI sau này.
+- `minimum_successful_count` trả `None` nếu không có kết quả thành công.
+  Một kịch bản hợp lệ đủ ba modulus đều lớn hơn M luôn thành công với cả ba;
+  `None` hữu ích khi tổng hợp một tập kết quả bị lọc hoặc rỗng.
+
+Số byte không đủ để suy ra khả năng khôi phục: cần xét giá trị M và tích
+modulus của tập người nhận cụ thể. `wrong_exact_root` khác `recovered`.
+
 ```powershell
 .\.venv\Scripts\python.exe -c "import broadcastguard; import broadcastguard.math_core; print(broadcastguard.__version__)"
 .\.venv\Scripts\python.exe -m compileall -q broadcastguard examples tests
@@ -95,4 +113,5 @@ git diff --check
 Tests toán học dùng dữ liệu cố định; demo sinh khóa bằng nguồn ngẫu nhiên bảo mật,
 không ghi khóa ra đĩa. Không mong đợi ciphertext lặp lại giữa các lần chạy.
 Xem [bối cảnh dự án](docs/PROJECT_CONTEXT.md), [tiến độ](docs/PROGRESS.md) và
-[quyết định](docs/DECISIONS.md) trước khi tiếp tục. Mỗi task dừng để review.
+[quyết định](docs/DECISIONS.md) trước khi tiếp tục. [Review checkpoint](docs/REVIEW_CHECKPOINT.md)
+tóm tắt trạng thái cho agent mới. Mỗi task dừng để review.

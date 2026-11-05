@@ -144,3 +144,64 @@ không force-push, không merge main. Tra SHA cuối bằng `git log -1 --format
 Các ciphertext/keypair demo là ngẫu nhiên, không kỳ vọng giá trị lặp lại; test
 kiểm tra invariant. Builder chỉ dành cho Textbook RSA không an toàn. Chưa có UI,
 OAEP workflow mới, AES-GCM, benchmark hay report. Không báo URL GitHub giả.
+
+**Cập nhật GitHub sau TASK 02:** reviewer xác minh `main` và
+`feat/step-02-attack-engine` đều trỏ tới
+`74e2a6c43a3997dd8fdfd90605a3079379227f2e`. Lỗi proxy và askpass ở trên
+là sự kiện lịch sử của phiên trước, không phải trạng thái GitHub hiện tại.
+
+## TASK 03 — Attack Conditions Analyzer
+
+Nhánh `feat/step-03-conditions-analyzer` xuất phát từ commit TASK 02 đã xác minh.
+Trước khi sửa: working tree sạch; `git ls-remote` (bỏ proxy của riêng process)
+xác nhận `main` và nhánh TASK 02 trên GitHub cùng SHA TASK 02; nhánh TASK 03
+chưa tồn tại. Không thay `main` hoặc lịch sử cũ.
+
+### Hoàn thành và acceptance criteria
+
+- `conditions_analyzer.py`: `analyze_scenario` dùng lại attack engine và
+  evaluator cho cả bảy tập con theo thứ tự 1/2/3 người. Có N, X, căn ứng viên,
+  exact, bound, trạng thái khôi phục, giải thích và dict rows cho UI.
+- `sweep_message_lengths`: thử `b"B" * length` với cùng ba public moduli, kiểm tra
+  M < n trước khi mã hóa. Có matrix, minimum và prediction-vs-observation rows.
+- Giữ nguyên `math_core.py`, `attack_lab.py` và API cũ. Không truyền M cho Eve.
+  Kịch bản sai ciphertext, thiếu người nhận, modulus không hợp lệ, M quá lớn
+  đều bị từ chối rõ. `wrong_exact_root` tách khỏi `recovered`.
+- Tạo CLI demo 05, tests, review checkpoint. Cập nhật README, AGENTS,
+  PROJECT_CONTEXT, DECISIONS và ghi tiến độ này; không làm TASK 04.
+
+### Kiểm chứng thực tế
+
+- Suite đầu có 144 pass, 1 fail do assertion smoke test đếm sai khoảng trắng
+  căn cột CLI. Sửa assertion; suite cuối: **145 passed in 4.01s**.
+- Lệnh pytest trong venv (sandbox dùng helper temp ngoài repo như TASK 01):
+
+```powershell
+$taskTemp = (Resolve-Path '..\.task01-work\tmp').Path
+$env:TEMP=$taskTemp
+$env:TMP=$taskTemp
+$env:BROADCASTGUARD_TASK_TEMP=$taskTemp
+$env:PYTHONPATH=(Resolve-Path '..\.task01-work\runtime').Path
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
+.\.venv\Scripts\python.exe -X utf8 -m pytest -q -p no:cacheprovider --basetemp '..\.task01-work\tmp\pytest-task03-final'
+```
+
+- Chạy riêng cả năm lệnh `python -X utf8 examples/<01..05>.py` bằng venv:
+  **PASS**. Demo 05 dùng 3 modulus RSA 2048 bit thật và cho minimum 1/2/3
+  với 1/96/180 byte; ma trận có 7 cột tập người nhận, 21 kết quả.
+
+```powershell
+$files = @('01_demo_de_hieu.py','02_demo_rsa_2048.py','03_demo_oaep.py','04_attack_lab.py','05_conditions_analyzer.py')
+foreach ($file in $files) { & .\.venv\Scripts\python.exe -X utf8 (Join-Path 'examples' $file) }
+```
+- `.venv\Scripts\python.exe -m compileall -q broadcastguard examples tests`:
+  **PASS**. Import ba module: **PASS**. `git diff --check`: **PASS**.
+- Review staged files và kiểm tra không có private key, token, venv hay dữ liệu
+  sinh ra trước commit. SHA cuối và trạng thái push xem `git log -1` và remote.
+
+### Giới hạn
+
+Giá trị khóa RSA demo ngẫu nhiên, không dùng làm benchmark. Với ba modulus hợp
+lệ mỗi modulus đều lớn hơn M, tập cả ba luôn thỏa M³ < N, nên no-success chỉ
+áp dụng khi tổng hợp một tập kết quả bị lọc/rỗng. Chưa có UI, AES-GCM, report
+hay thí nghiệm hiệu năng. `REVIEW_CHECKPOINT.md` là tài liệu bàn giao ngắn.

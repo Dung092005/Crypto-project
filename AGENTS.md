@@ -1,7 +1,8 @@
 # Hướng dẫn làm việc với BroadcastGuard
 
 - Trước khi sửa code, đọc toàn bộ `README.md`, `docs/PROJECT_CONTEXT.md`,
-  `docs/PROGRESS.md` và các quyết định liên quan trong `docs/DECISIONS.md`.
+  `docs/PROGRESS.md`, `docs/REVIEW_CHECKPOINT.md` và các quyết định liên quan
+  trong `docs/DECISIONS.md`. Cập nhật checkpoint ở mỗi mốc được review.
 - Kiểm tra working directory, git status, branch và remote. Bảo toàn thay đổi
   chưa commit; không force-push, tự merge main hoặc ghi đè code chưa đọc.
 - Mỗi task phải có acceptance criteria và tests tương ứng; ghi kết quả chạy

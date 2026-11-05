@@ -63,3 +63,21 @@ preview để UI không phải in số 2048 bit. `ExperimentEvaluation` có bố
 thái riêng, điều kiện M³ < N và `candidate_bytes` theo độ dài bản gốc để giữ
 byte 0 đầu. Input sai trả reason từ attacker; evaluator từ chối ghép outcome
 với quan sát của run khác. Không thêm framework hay class chứa khóa bí mật.
+
+## D009 — Dùng cùng public moduli cho phép quét độ dài
+
+`sweep_message_lengths` lấy một kịch bản RSA có sẵn rồi mã hóa các mẫu
+`b"B" * length` bằng đúng ba modulus đó. Mỗi mẫu là một `AttackScenario` được
+đánh giá riêng; Eve vẫn chỉ nhận quan sát công khai. Cách này cô lập biến độ
+lớn thông điệp khỏi biến khóa, không seed bộ sinh khóa. Analyzer từ chối
+kịch bản có ciphertext không khớp M, modulus không hợp lệ, thiếu người nhận
+hoặc M không nhỏ hơn mọi modulus. Không sửa API toán học và Attack Lab cũ.
+
+## D010 — Tách trạng thái kết quả khỏi màu giao diện
+
+`SubsetAnalysis` giữ N, X và căn nguyên đầy đủ; `status` dùng semantic labels
+`recovered`, `wrong_exact_root`, `no_exact_root`. Các hàm `table_rows`,
+`matrix_rows`, `minimum_rows`, `comparison_rows` trả dict đơn giản; UI sau này
+chọn màu. Lời giải thích có nhãn `Experimenter` nếu dùng M³ < N. Với ba
+modulus hợp lệ cùng lớn hơn M, tích của cả ba chắc chắn lớn hơn M³; tuy vậy
+thuộc tính minimum vẫn trả `None` cho tập kết quả rỗng/bị lọc.
