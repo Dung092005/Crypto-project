@@ -3,7 +3,8 @@
 Ứng dụng giáo dục mật mã cho project giữa kỳ. Các bước 01–03 xây lõi toán học,
 Attack Lab và bộ phân tích điều kiện. TASK 04 thêm Defense Lab so sánh Textbook
 RSA với RSA-OAEP trên cùng thông điệp, cùng ba khóa và cùng phép thử của Eve.
-Chưa có giao diện hoặc chức năng mã hóa file.
+TASK 05 bổ sung mã hóa file cho nhiều người nhận bằng AES-256-GCM và RSA-OAEP.
+Chưa có giao diện web.
 
 ## Cài đặt trên Windows
 
@@ -19,6 +20,7 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe -X utf8 examples\04_attack_lab.py
 .\.venv\Scripts\python.exe -X utf8 examples\05_conditions_analyzer.py
 .\.venv\Scripts\python.exe -X utf8 examples\06_defense_lab.py
+.\.venv\Scripts\python.exe -X utf8 examples\07_hybrid_sharing.py
 ```
 
 Không cần activate môi trường, đổi ExecutionPolicy hoặc quyền admin. Dùng
@@ -38,13 +40,15 @@ broadcastguard/           Python package
     attack_lab.py         Kịch bản, Eve, bộ đánh giá thực nghiệm
     conditions_analyzer.py Phân tích bảy tập người nhận và quét độ dài
     defense_lab.py        So sánh Textbook RSA / RSA-OAEP có kiểm soát
-examples/                 Sáu demo CLI
+    hybrid_sharing.py     Mã hóa file nhiều người nhận, gói v1
+examples/                 Bảy demo CLI
 tests/                    Unit tests và smoke tests chạy demo bằng subprocess
 docs/
     PROJECT_CONTEXT.md    Mục tiêu, phạm vi, threat model, acceptance criteria
     PROGRESS.md           Kết quả thực tế và việc còn tồn đọng
     DECISIONS.md          Quyết định kiến trúc và lý do
     REVIEW_CHECKPOINT.md Bàn giao trạng thái đã kiểm chứng
+    SECURE_SHARING_DESIGN.md Định dạng gói và giới hạn bảo mật
 AGENTS.md                 Quy tắc tiếp tục công việc cho coding agent
 pyproject.toml            Packaging, dependencies và pytest
 ```
@@ -64,8 +68,24 @@ pyproject.toml            Packaging, dependencies và pytest
   Eve dùng lại CRT + căn bậc ba trên cả hai bộ quan sát. OAEP mã hóa ngẫu nhiên
   trước RSA, nên điều kiện `M³ < N` của Textbook RSA không giải thích kết quả
   OAEP. Sự thất bại của phép thử này không chứng minh an toàn tuyệt đối.
-- Textbook RSA chỉ dành cho attack lab. Secure Sharing sau này dùng
+- Textbook RSA chỉ dành cho attack lab. Secure Sharing dùng
   AES-256-GCM + RSA-OAEP và RSA e=65537, không tái sử dụng Textbook RSA.
+
+TASK 05: `broadcastguard.hybrid_sharing` mã hóa file bytes đúng một lần bằng
+khóa AES-256 mới và nonce 12 byte mới. Khóa AES được bọc riêng cho 1–5 người
+nhận bằng RSA-OAEP SHA-256/MGF1-SHA256. `generate_demo_recipients(count)` tạo
+keypair trong RAM. `encrypt_file_for_recipients(data, filename, public_recipients)`
+trả `EncryptedPackage`; `serialize_package` / `deserialize_package` chuyển
+gói JSON/Base64 v1; `decrypt_file_for_recipient(package, id, private_key)`
+chỉ trả file khi giải mã và xác thực thành công. `summarize_package` trả dữ
+liệu công khai, ngắn cho UI sau này; `attempt_decrypt_file_for_recipient` trả
+trạng thái có cấu trúc và không trả dữ liệu khi giải mã thất bại.
+
+Giới hạn file thử nghiệm 5 MiB. Header canonical JSON là AAD của GCM nên
+metadata, danh sách người nhận và wrapped keys được xác thực. `PackageValidationError`
+báo cấu trúc sai; `DecryptionFailed` báo người nhận/khóa/xác thực không thành công.
+Public keys phải được xác thực trước; package không có chữ ký người gửi và không
+chống replay hoặc thay thế toàn bộ. Xem [thiết kế gói v1](docs/SECURE_SHARING_DESIGN.md).
 
 ## API và kiểm chứng
 

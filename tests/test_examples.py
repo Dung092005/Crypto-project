@@ -15,6 +15,7 @@ import pytest
     ("04_attack_lab.py", "Eve thu 3 bản mã"),
     ("05_conditions_analyzer.py", "Attack Conditions Analyzer"),
     ("06_defense_lab.py", "RSA-OAEP Defense Lab"),
+    ("07_hybrid_sharing.py", "Secure Hybrid File Sharing"),
 ])
 def test_demo_runs_with_installed_package(filename: str, expected: str, tmp_path: Path) -> None:
     script = Path(__file__).resolve().parents[1] / "examples" / filename
@@ -37,4 +38,7 @@ def test_demo_runs_with_installed_package(filename: str, expected: str, tmp_path
     if filename == "06_defense_lab.py":
         assert "Tất cả lần OAEP đều giải mã đúng: True" in result.stdout
         assert "chứng minh an toàn tuyệt đối" in result.stdout
+    if filename == "07_hybrid_sharing.py":
+        assert "Sửa một byte ciphertext: xác thực AES-GCM thất bại" in result.stdout
+        assert "Khóa sai của Bob dùng cho Alice: bị từ chối" in result.stdout
     assert list(tmp_path.iterdir()) == []

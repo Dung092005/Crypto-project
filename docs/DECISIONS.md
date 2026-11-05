@@ -100,3 +100,24 @@ quan sát được khác nhau và vẫn giải mã đúng; Textbook RSA lặp l�
 ciphertext. Không seed CSPRNG, không dùng snapshot ciphertext, không coi vài
 lần thử là chứng minh bảo mật. TASK 05 dùng e=65537 cho Secure Sharing và
 không tái sử dụng phép Textbook RSA ở đây.
+
+## D013 — Hybrid encryption tách khỏi các lab Textbook RSA
+
+`hybrid_sharing.py` không import hoặc gọi `math_core` / `attack_lab`. Dùng
+AESGCM của `cryptography` mã hóa file đúng một lần và RSA-OAEP SHA-256 bọc
+khóa AES cho từng public key RSA-2048/e=65537. Tạo khóa và nonce mới từng lần
+mã hóa. Demo keypair nằm riêng trong RAM; public recipient objects dùng lúc
+mã hóa, private key chỉ dùng lúc giải mã. Fingerprint SHA-256(DER SPKI) ổn định,
+không thay thế việc xác thực public key ngoài ứng dụng.
+
+## D014 — JSON v1 canonical làm AAD và validation nghiêm ngặt
+
+Header chứa version, thuật toán, tên file, kích thước, nonce và toàn bộ wrapped
+key entries. JSON UTF-8 `sort_keys=True`, separators gọn, Base64 canonical;
+header bytes là AAD. AESGCM tạo ciphertext + tag 16 byte trong một lần gọi.
+Import giới hạn 8 MiB, từ chối duplicate JSON keys, trường thừa/thiếu, version
+hoặc thuật toán khác, nonce/Base64/độ dài sai, ID/fingerprint trùng. File demo
+giới hạn 5 MiB, filename chỉ là basename hiển thị. `PackageValidationError`
+tách lỗi format khỏi `DecryptionFailed` khi recipient/OAEP/GCM không xác thực.
+Không pickle, không thêm sender signature, replay protection hay persistence
+trong TASK 05; xem `SECURE_SHARING_DESIGN.md`.

@@ -37,6 +37,14 @@ quan sát công khai. Bộ đánh giá tách riêng so sánh ứng viên với p
 không dùng điều kiện Textbook `M³ < N` để diễn giải OAEP. Private keys chỉ nằm
 trong RAM lúc tạo và giải mã thí nghiệm, không nằm trong dữ liệu trả về.
 
+TASK 05 thêm Secure Hybrid File Sharing tại `hybrid_sharing.py`: mã hóa file
+bytes (0–5 MiB) **một lần** bằng AES-256-GCM với khóa 32 byte/nonce 12 byte
+mới mỗi lần; RSA-2048/e=65537 OAEP-SHA256/MGF1-SHA256 bọc khóa AES cho mỗi
+người nhận. Header JSON canonical v1 làm AAD và gồm cả recipient list cùng
+wrapped keys. Package không chứa plaintext, AES key rõ hoặc private key.
+API từ chối package sai cấu trúc và lỗi xác thực riêng; không trả plaintext
+một phần. Filename chỉ dùng hiển thị, không quyết định đường dẫn ghi file.
+
 ## Stack
 
 Python >=3.11, standard library cho số học; pyca/cryptography cho RSA và OAEP;
@@ -59,11 +67,13 @@ Không Docker, database, server hay authentication trong bước này.
   theo `mLen <= k - 2*hLen - 2` của [RFC 8017 §7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1).
   OAEP mã hóa ngẫu nhiên thành các representative khác nhau trước RSA; không thể
   suy ra kết quả OAEP từ bất đẳng thức dành cho cùng một M của Textbook RSA.
-- Chia sẻ an toàn sau này giả định public keys người nhận đã được xác thực trước.
+- Chia sẻ an toàn giả định public keys người nhận đã được xác thực trước.
+  TASK 05 áp dụng giả định này; fingerprint là SHA-256 của DER SPKI nhưng không
+  tự chứng thực danh tính. Không có sender authentication hoặc chữ ký số.
   Chưa xử lý phân phối/chứng thực public keys qua mạng, danh tính người gửi,
   replay, thu hồi khóa hoặc bảo vệ endpoint bị chiếm quyền. AES-GCM không tự
   chứng minh danh tính người gửi; các giới hạn này không được quảng cáo thành tính năng.
-- Secure Sharing dự kiến RSA 2048 bit e=65537, AES-256-GCM, khóa AES mới 32 byte
+- Secure Sharing dùng RSA 2048 bit e=65537, AES-256-GCM, khóa AES mới 32 byte
   và nonce 12 byte mới mỗi lần gửi; không tái sử dụng nonce với cùng khóa.
   Metadata cần được serialize nhất quán và xác thực bằng AAD.
 

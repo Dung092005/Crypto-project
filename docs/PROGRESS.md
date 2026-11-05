@@ -263,3 +263,70 @@ không so ciphertext cố định. Không suy ra an toàn tuyệt đối từ th
 CRT-and-root. Phép thử e=3 chỉ để cô lập tác động padding; Secure Sharing ở
 TASK 05 sẽ dùng e=65537 sau khi được giao riêng. Chưa có UI, AES-GCM, report
 hoặc số liệu nghiên cứu/hiệu năng.
+
+## TASK 05 — Secure Hybrid File Sharing (chờ reviewer xác nhận)
+
+Nhánh `feat/step-05-hybrid-sharing` tạo từ TASK 04 đã review,
+`2ab75d50a2fe036aa3811809b7b9a608c46bbdc4`. Trước khi sửa, working tree
+sạch, HEAD khớp baseline, remote là `Dung092005/Crypto-project.git`. Graph
+`codebase-memory` chưa index repo này; đã đọc source thực tế trong phạm vi task.
+
+### Acceptance criteria và công việc đã làm
+
+- `hybrid_sharing.py` tách keypair demo trong RAM, public recipients, AES-GCM
+  mã hóa file một lần, RSA-OAEP bọc khóa AES riêng, package JSON v1, validation,
+  giải mã theo người nhận, summary công khai và wrapper trạng thái cho UI.
+  Không import các module Textbook
+  RSA. Dùng RSA-2048/e=65537, OAEP SHA-256/MGF1-SHA256/label=None, AES-256-GCM,
+  khóa 32 byte mới và nonce 12 byte mới cho từng package; GCM tag đủ 16 byte.
+- Header canonical UTF-8 JSON (sorted keys, compact separators, Base64) làm
+  AAD, gồm version/algorithms/filename/size/nonce/recipient entries/wrapped
+  keys. Giới hạn 1–5 recipients, file 5 MiB, serialized package 8 MiB.
+  Từ chối trùng ID/public key, version/algorithm sai, duplicate JSON keys,
+  Base64/nonce/kích thước sai và path-like filename. `PackageValidationError`
+  tách khỏi `DecryptionFailed`; không trả plaintext khi xác thực thất bại.
+- CLI demo 07 và tests thực thi 1/3/5 recipients, file rỗng/binary/UTF-8,
+  10 KB/100 KB/1 MiB/5 MiB, serialization và các kiểu tampering. Tài liệu
+  `SECURE_SHARING_DESIGN.md` ghi rõ luồng, format và giới hạn bảo mật.
+  Không xây Streamlit, networking, database, benchmark hoặc report.
+
+### Kiểm chứng đã thực hiện
+
+- Venv Python 3.12.10. Cài editable project + dev extra thành công bằng
+  `.venv\Scripts\python.exe -X utf8 -m pip install --no-index --no-build-isolation -e ".[dev]"`;
+  cryptography 48.0.1, pytest 9.1.1 đã có sẵn. Sandbox cần TEMP/PYTHONPATH
+  workaround ngoài repo như TASK 01.
+- `tests/test_hybrid_sharing.py`: ban đầu **39 passed**. Lần chạy đầu lỗi setup do pytest
+  tự đưa dữ liệu 1 MiB vào tên case/đường dẫn Windows; đặt case IDs ngắn,
+  chạy lại **39 passed in 0.84s**. Sau đó thêm test trạng thái UI; suite cuối
+  có 40 bài hybrid. Không có lỗi thuật toán.
+- Toàn bộ suite gồm smoke tests demo 01–07: **203 passed in 5.34s** ở lần chạy cuối.
+  Lệnh:
+
+```powershell
+$taskTemp = (Resolve-Path '..\.task01-work\tmp').Path
+$env:TEMP=$taskTemp
+$env:TMP=$taskTemp
+$env:BROADCASTGUARD_TASK_TEMP=$taskTemp
+$env:PYTHONPATH=(Resolve-Path '..\.task01-work\runtime').Path
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
+.\.venv\Scripts\python.exe -X utf8 -m pytest -q -p no:cacheprovider --basetemp '..\.task01-work\tmp\pytest-task05-final2'
+```
+
+- Chạy riêng cả bảy demo `python -X utf8 examples/<01..07>.py`: **PASS**.
+  Demo 07: Alice/Bob/Charlie khôi phục đúng file giả lập; khóa Bob dùng cho
+  Alice bị từ chối; sửa một byte ciphertext bị từ chối. Output kích thước
+  package của run này không phải benchmark.
+- `.venv\Scripts\python.exe -m compileall -q broadcastguard examples tests`:
+  **PASS**. Import năm module: **PASS**. `git diff --check`: **PASS**.
+- Rà staged files và mẫu private key/token trước commit; SHA remote đối chiếu
+  sau push.
+
+### Giới hạn và technical debt
+
+Public keys phải được xác thực ở ngoài module; fingerprint không tự chứng thực
+danh tính. Không có chữ ký người gửi, chống replay/thay thế nguyên package,
+key persistence hoặc streaming trên 5 MiB. Filename chỉ là metadata hiển thị,
+không là đường dẫn ghi file. Tests kiểm tra invariant với randomness thật,
+không tạo số liệu hiệu năng nghiên cứu. TASK 06 là Attack Lab Streamlit UI sau
+khi TASK 05 được review và giao riêng; academic report chưa thực hiện.
