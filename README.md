@@ -9,6 +9,8 @@ The validated TASK 08 evidence has a reproducible scientific analysis package. F
 
 The analysis reads the official CSV evidence, regenerates compact E1-E4 and key-generation tables plus four report-ready figures as PNG/SVG, and does not run cryptographic benchmarks. Methods, findings, limitations, the claim-evidence matrix and figure index are in docs/analysis/. Install optional analysis dependencies with the analysis extra when needed: pip install -e ".[analysis]". The final academic report remains a later deliverable.
 
+For final verification, follow [REPRODUCIBILITY](docs/REPRODUCIBILITY.md), [FINAL_AUDIT](docs/FINAL_AUDIT.md) and the [report readiness checklist](docs/REPORT_READINESS_CHECKLIST.md). TASK 10 corrects figure layout and audits the existing official evidence; it does not create a new benchmark run or an academic report.
+
 **An interactive cryptography lab for understanding RSA Broadcast Attack and its defenses.**
 Ứng dụng giáo dục mật mã cho project giữa kỳ tại USTH. Người học quan sát một
 cuộc tấn công trên Textbook RSA, thử lại cùng phép tấn công với RSA-OAEP, rồi
@@ -16,8 +18,9 @@ khám phá cách AES-GCM và RSA-OAEP phối hợp để chia sẻ file cho nhi�
 
 > **Current state:** Attack Lab và Defense Lab có giao diện Streamlit. Secure
 > Sharing đã có Python API và CLI demo; giao diện file sharing chưa triển khai.
-> README chưa công bố URL public deployment đã kiểm chứng hoặc kết quả
-> benchmark chính thức.
+> Người dùng đã xác nhận public deployment hoạt động; README chưa công bố URL
+> đã kiểm chứng độc lập. Bộ số liệu official và giới hạn diễn giải nằm trong
+> [EXPERIMENT_EVIDENCE](docs/EXPERIMENT_EVIDENCE.md).
 
 ## What can you do?
 

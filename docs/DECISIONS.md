@@ -170,3 +170,7 @@ TASK 08 chạy E1–E4 ngoài Streamlit, không sửa API mật mã. Official ru
 ## D021 - TASK 09 analysis evidence-derived va fail-closed
 
 Phan tich doc rieng official run official-20261106T083221Z-3bbf57cc, khong chen so lieu vao plotting code va khong chay benchmark khi import. load_official_evidence() goi validator TASK 08, kiem tra run ID, source SHA, schema, row counts, validation flags va summary tu raw CSV. Bang E3 bao gom mean/median/SD/Q1/Q3/IQR/min/max theo ms; khong bo outlier. Package model dung canonical JSON skeleton voi do dai thuc te cua Base64, fingerprint, RSA-2048 wrapped key, filename va recipient ID; arbitrary metadata khong bi gan mot header constant.
+
+## D022 — TASK 10 chỉ sửa cách trình bày và đóng băng bằng chứng
+
+Giữ nguyên official CSV, manifest, run ID và thuật toán mật mã. Figure 2 tăng khoảng trống để nhãn không chạm tiêu đề. Figure 3 dùng ba trục Y độc lập, đều bắt đầu tại 0 và được ghi rõ trên hình/caption; legend nằm ngoài vùng dữ liệu. Figure 1 giải nghĩa trực tiếp hai mẫu 96 byte. SVG giữ text có thể tìm kiếm; bảng số học không đổi. Audit độc lập đọc lại CSV và đối chiếu với sáu bảng; thay đổi phiên bản Matplotlib có thể làm raster/vector khác pixel mà không đổi dữ liệu. `FINAL_AUDIT.md` là hồ sơ kiểm chứng, không phải report học thuật.

@@ -87,6 +87,8 @@ Không Docker, database, server hay authentication trong bước này.
 
 ## Quy tắc bảo mật và tái lập
 
+TASK 10 is the final engineering audit before the separately requested academic report. The approved TASK 09 commit `b5284233bea900d31a2a2794adef3eee548c3165` is integrated into `main`; the TASK 10 feature branch only corrects report figures, checks cryptographic assumptions and immutable official evidence, and documents reproducibility. See `FINAL_AUDIT.md`, `REPRODUCIBILITY.md` and `REPORT_READINESS_CHECKLIST.md`. Public keys remain assumed authenticated; the application offers no sender authentication, replay defense, PKI or general identity verification. Non-recovery by one tested method is not a universal security result.
+
 TASK 08 bổ sung thí nghiệm offline E1–E4 và bằng chứng có provenance; chi tiết thiết kế, biến độc lập/phụ thuộc, điều kiện kiểm soát, schema và giới hạn diễn giải nằm trong `EXPERIMENT_PROTOCOL.md`. Các phép đo hiệu năng không chạy từ Streamlit, không tính sinh khóa vào chi phí mã hóa file thường lệ, và không tự động biến thất bại của CRT-and-root trên OAEP thành một chứng minh bảo mật. TASK 08 không mở rộng giao diện hay viết academic report.
 
 TASK 07 trình bày hai phòng thí nghiệm qua `app.py` và `st.navigation`.

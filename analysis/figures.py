@@ -8,6 +8,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 matplotlib.rcParams["svg.hashsalt"] = "broadcastguard-task09"
+matplotlib.rcParams["svg.fonttype"] = "none"  # Keep figure labels as searchable vector text.
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -33,10 +34,17 @@ def figure_1(matrix_csv: Path, output: Path) -> None:
     rows = _read(matrix_csv)
     columns = ["Alice", "Bob", "Charlie", "Alice+Bob", "Alice+Charlie", "Bob+Charlie", "Alice+Bob+Charlie"]
     values = np.array([[int(row[col]) for col in columns] for row in rows])
-    fig, ax = plt.subplots(figsize=(7.1, 2.65))
+    fig, ax = plt.subplots(figsize=(8.0, 3.0))
     image = ax.imshow(values, cmap="Blues", vmin=0, vmax=20, aspect="auto")
     ax.set_xticks(range(len(columns)), columns, rotation=35, ha="right")
-    ax.set_yticks(range(len(rows)), [row["sample_id"] for row in rows])
+    sample_labels = {
+        "short_1": "1 byte: B",
+        "medium_96": "96 bytes: B × 96",
+        "long_180": "180 bytes: B × 180",
+        "leading_zero_96": "96 bytes: 95 zeros + 0x02",
+    }
+    ax.set_yticks(range(len(rows)), [sample_labels.get(row["sample_id"], row["sample_id"])
+                                        for row in rows])
     ax.set_xlabel("Intercepted recipient subset")
     ax.set_ylabel("Message sample")
     ax.set_title("E1. Textbook RSA recovery across recipient subsets (n=20 blocks)")
@@ -53,13 +61,15 @@ def figure_2(e2_csv: Path, output: Path) -> None:
     labels = ["Textbook\nrecovery", "OAEP\nrecovery", "OAEP legitimate\ndecryption", "OAEP ciphertext\ndiversity"]
     values = [int(row["textbook_recovery"]), int(row["oaep_recovery"]), int(row["legitimate_oaep_decryption"]), int(row["oaep_ciphertexts_distinct"])]
     colors = [COLORS["textbook"], COLORS["oaep"], COLORS["decrypt"], COLORS["oaep"]]
-    fig, ax = plt.subplots(figsize=(6.6, 3.3))
+    fig, ax = plt.subplots(figsize=(6.6, 3.5))
     bars = ax.bar(labels, values, color=colors, edgecolor="black", linewidth=0.5)
-    ax.set_ylim(0, 64)
+    ax.set_ylim(0, 72)
     ax.set_ylabel("Paired comparisons (out of 60)")
-    ax.set_title("E2. Controlled Textbook RSA and RSA-OAEP outcomes")
+    ax.set_title("E2. Controlled Textbook RSA and RSA-OAEP outcomes", pad=15)
     for bar, value in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 1.5, f"{value}/60", ha="center", va="bottom", fontsize=9)
+        ax.text(bar.get_x() + bar.get_width() / 2, value + 1.4, f"{value}/60",
+                ha="center", va="bottom", fontsize=9)
+    fig.subplots_adjust(top=0.79, bottom=0.24)
     _save(fig, output)
 
 
@@ -67,7 +77,7 @@ def figure_3(e3_csv: Path, output: Path) -> None:
     rows = _read(e3_csv)
     sizes = sorted({int(row["file_size_bytes"]) for row in rows})
     recipients = [1, 3, 5]
-    fig, axes = plt.subplots(1, 3, figsize=(7.5, 2.9), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(8.5, 3.4), sharey=False)
     for ax, size in zip(axes, sizes):
         selected = [row for row in rows if int(row["file_size_bytes"]) == size]
         crypto = [float(next(row for row in selected if int(row["recipient_count"]) == r)["total_encryption_ms_mean"]) - float(next(row for row in selected if int(row["recipient_count"]) == r)["serialization_ms_mean"]) for r in recipients]
@@ -77,11 +87,15 @@ def figure_3(e3_csv: Path, output: Path) -> None:
         ax.bar(x, serialization, bottom=crypto, color=COLORS["serialization"], edgecolor="black", linewidth=0.35, hatch="..", label="JSON/Base64 serialize")
         ax.set_xticks(x, [str(r) for r in recipients])
         ax.set_xlabel("Recipients")
+        ax.set_ylabel("Mean time (ms)")
+        ax.set_ylim(0, 1.18 * max(c + s for c, s in zip(crypto, serialization)))
         ax.set_title("1 MiB" if size == 1048576 else f"{size / 1024:g} KiB")
         ax.grid(axis="y", alpha=0.25)
-    axes[0].set_ylabel("Mean time (ms)")
-    axes[-1].legend(frameon=True, framealpha=0.9, fontsize=7, loc="upper left")
-    fig.suptitle("E3. Mean encryption workflow decomposition (n=20 per bar)", y=1.02)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, frameon=False, ncol=2, loc="upper center",
+               bbox_to_anchor=(0.5, 0.86), fontsize=8)
+    fig.suptitle("E3. Workflow time by file size (n=20 per bar; independent Y scales)", y=0.98)
+    fig.subplots_adjust(left=0.08, right=0.99, bottom=0.19, top=0.69, wspace=0.37)
     _save(fig, output)
 
 

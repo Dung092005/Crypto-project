@@ -26,7 +26,7 @@ Timing summaries use recorded nanoseconds converted to milliseconds and report n
 
 For plaintext size L, AES-GCM contributes a 16-byte tag, so encrypted content has L+16 bytes. The outer JSON stores this content in Base64, contributing 4*ceil((L+16)/3) ASCII characters. The remaining term is generated from the current compact sorted JSON representation, including algorithm fields, filename, original size, 12-byte nonce in Base64, recipient IDs, 64-character SHA-256 fingerprints and one 256-byte RSA-2048 ciphertext in Base64 per recipient. The model retains the controlled E3 filename synthetic.bin and recipient IDs Alice through Emma; arbitrary filenames and IDs change the metadata term.
 
-Figures use Matplotlib's non-interactive Agg backend and are saved as 300-DPI PNG and SVG. No benchmark runs during import or figure generation.
+Figures use Matplotlib's non-interactive Agg backend and are saved as 300-DPI PNG and SVG. Figure 3 gives each file-size panel its own labeled Y scale, starting at zero; compare numerical values rather than bar heights between panels. No benchmark runs during import or figure generation.
 
 Source SHA: {manifest['git_commit']}
 Raw evidence: docs/evidence/{manifest['run_id']}/
@@ -105,9 +105,9 @@ def _write_figure_index(output: Path) -> None:
 
 | Figure | Files | Role | Caption guidance |
 | --- | --- | --- | --- |
-| Figure 1 | figures/figure_1_e1_recovery_matrix.png/.svg | Essential | E1 recovery counts out of 20 key-set blocks for all four messages and seven subsets. |
-| Figure 2 | figures/figure_2_e2_scheme_comparison.png/.svg | Essential | E2 paired outcomes across 60 comparisons; distinguish attack recovery from legitimate decryption and ciphertext diversity. |
-| Figure 3 | figures/figure_3_e3_timing_decomposition.png/.svg | Essential | E3 mean encrypt+wrap versus JSON/Base64 serialization, n=20 per bar; total excludes key generation. |
+| Figure 1 | figures/figure_1_e1_recovery_matrix.png/.svg | Essential | E1 recovery counts out of 20 key-set blocks for all seven subsets. The two 96-byte samples are B repeated 96 times and 95 leading zero bytes followed by 0x02. |
+| Figure 2 | figures/figure_2_e2_scheme_comparison.png/.svg | Essential | E2 paired outcomes across 60 comparisons in 20 key-set blocks; distinguish attack recovery from legitimate decryption and ciphertext diversity. |
+| Figure 3 | figures/figure_3_e3_timing_decomposition.png/.svg | Essential | E3 mean encrypt+wrap versus JSON/Base64 serialization, n=20 per bar; total excludes key generation. Each file-size panel has an independent Y scale starting at zero; compare numerical axes, not bar heights across panels. |
 | Figure 4 | figures/figure_4_e3_package_overhead.png/.svg | Essential for storage argument | Absolute and relative serialized package overhead for nine E3 configurations, n=20 per point. |
 
 Figures 1–4 are suitable for a short report. E4 is better as a compact correctness table than as a chart. Figure 3 should be paired with the median/IQR table; Figure 4 should be paired with the exact structural model and residual column.

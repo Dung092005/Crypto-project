@@ -485,3 +485,9 @@ Baseline integration: main fast-forwarded tu 626c68e881a459d63a82f7f844ab558abed
 Da them analysis/ va sinh docs/analysis/ tu raw CSV. CLI validate official dataset truoc khi phan tich, tinh lai descriptive statistics, tao bang E1/E2/E3/E4, suy ra mo hinh kich thuoc JSON/Base64 va xuat bon hinh PNG/SVG. E1 du doan khop 560/560 rows; E2 co 60/60 Textbook recovery, 0/60 tested OAEP CRT-and-root recovery va 60/60 legitimate OAEP decryption; package model co residual 0 tren 9 cau hinh E3; E4 co 11/11 expected outcomes.
 
 Phan tich ghi ro E2 clustered trong 20 key-set blocks, E3 la wall-clock mot may voi key generation tach rieng, decryption chi do first valid recipient, va E4 la correctness validation deterministic. Khong viet final academic report. TASK 10 danh rieng cho final validation va research-quality audit; report van la buoc sau.
+
+## TASK 10 — Final audit and report readiness
+
+Approved TASK 09 SHA `b5284233bea900d31a2a2794adef3eee548c3165` was safely fast-forwarded from `origin/main=46eff82...` to `main`, pushed and verified. Branch `feat/step-10-final-audit` starts from the exact approved SHA. No force-push or history rewrite. Official TASK 08 data remained unchanged.
+
+Corrected Figure 2 label spacing, Figure 3 panel scales/legend and Figure 1 sample descriptions; visually inspected all four regenerated PNGs. Six regenerated CSV tables matched previously committed tables byte-for-byte. Added independent raw-CSV/table checks and reproducibility/report-readiness documents. Exact final test and Git checks are in `FINAL_AUDIT.md`. Academic report is still separate and has not begun.

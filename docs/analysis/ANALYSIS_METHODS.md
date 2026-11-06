@@ -13,7 +13,7 @@ Timing summaries use recorded nanoseconds converted to milliseconds and report n
 
 For plaintext size L, AES-GCM contributes a 16-byte tag, so encrypted content has L+16 bytes. The outer JSON stores this content in Base64, contributing 4*ceil((L+16)/3) ASCII characters. The remaining term is generated from the current compact sorted JSON representation, including algorithm fields, filename, original size, 12-byte nonce in Base64, recipient IDs, 64-character SHA-256 fingerprints and one 256-byte RSA-2048 ciphertext in Base64 per recipient. The model retains the controlled E3 filename synthetic.bin and recipient IDs Alice through Emma; arbitrary filenames and IDs change the metadata term.
 
-Figures use Matplotlib's non-interactive Agg backend and are saved as 300-DPI PNG and SVG. No benchmark runs during import or figure generation.
+Figures use Matplotlib's non-interactive Agg backend and are saved as 300-DPI PNG and SVG. Figure 3 gives each file-size panel its own labeled Y scale, starting at zero; compare numerical values rather than bar heights between panels. No benchmark runs during import or figure generation.
 
 Source SHA: 46c455819e4588736d4777c252d844fa03e7caf3
 Raw evidence: docs/evidence/official-20261106T083221Z-3bbf57cc/
