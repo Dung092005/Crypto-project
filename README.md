@@ -7,7 +7,7 @@ The validated TASK 08 evidence has a reproducible scientific analysis package. F
     python -m experiments.run_experiments --validate-only docs/evidence/official-20261106T083221Z-3bbf57cc
     python -m analysis.run_analysis --input docs/evidence/official-20261106T083221Z-3bbf57cc --output docs/analysis
 
-The analysis reads the official CSV evidence, regenerates five compact tables and four report-ready figures as PNG/SVG, and does not run cryptographic benchmarks. Methods, findings, limitations, the claim-evidence matrix and figure index are in docs/analysis/. Install optional analysis dependencies with the analysis extra when needed: pip install -e ".[analysis]". The final academic report remains a later deliverable.
+The analysis reads the official CSV evidence, regenerates compact E1-E4 and key-generation tables plus four report-ready figures as PNG/SVG, and does not run cryptographic benchmarks. Methods, findings, limitations, the claim-evidence matrix and figure index are in docs/analysis/. Install optional analysis dependencies with the analysis extra when needed: pip install -e ".[analysis]". The final academic report remains a later deliverable.
 
 **An interactive cryptography lab for understanding RSA Broadcast Attack and its defenses.**
 Ứng dụng giáo dục mật mã cho project giữa kỳ tại USTH. Người học quan sát một
