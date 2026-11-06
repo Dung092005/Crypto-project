@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  box/.style={draw=usthblue,rounded corners=2pt,align=center,
+              minimum width=2.75cm,minimum height=0.88cm,inner sep=3pt,font=\footnotesize},
+  evidence/.style={draw=black!65,align=center,minimum width=8.6cm,
+                   minimum height=0.70cm,inner sep=3pt,font=\footnotesize},
+  flow/.style={-{Latex[length=2.2mm]},line width=0.65pt}
+]
+\node[box] (a1) at (0,2.6) {Shared bytes\\textbook builder, $e=3$};
+\node[box] (a2) at (3.65,2.6) {Public observations\\$(n_i,e,c_i)$};
+\node[box] (a3) at (7.3,2.6) {Eve: CRT and\\exact cube root};
+\node[box] (a4) at (10.95,2.6) {Evaluator only:\\compare with $M$};
+\draw[flow] (a1) -- (a2); \draw[flow] (a2) -- (a3); \draw[flow] (a3) -- (a4);
+
+\node[box] (b1) at (0,1.35) {Same keys and bytes\\textbook / OAEP};
+\node[box] (b2) at (3.65,1.35) {Two sets of public\\ciphertexts};
+\node[box] (b3) at (7.3,1.35) {Same Eve method\\on each scheme};
+\node[box] (b4) at (10.95,1.35) {Evaluator and\\valid OAEP recipients};
+\draw[flow] (b1) -- (b2); \draw[flow] (b2) -- (b3); \draw[flow] (b3) -- (b4);
+
+\node[box] (c1) at (0,0.1) {File bytes and verified\\recipient public keys};
+\node[box] (c2) at (3.65,0.1) {AES-GCM once\\OAEP key wrap per ID};
+\node[box] (c3) at (7.3,0.1) {Versioned JSON\\header as GCM AAD};
+\node[box] (c4) at (10.95,0.1) {Matching recipient\\unwraps and decrypts};
+\draw[flow] (c1) -- (c2); \draw[flow] (c2) -- (c3); \draw[flow] (c3) -- (c4);
+
+\node[evidence] (ev) at (5.475,-1.15) {E1--E4 raw CSVs $\rightarrow$ read-back validation $\rightarrow$ descriptive tables and figures};
+\draw[flow] (a4.south) |- (ev.east);
+\draw[flow] (c3.south) |- (ev.north);
+\end{tikzpicture}
