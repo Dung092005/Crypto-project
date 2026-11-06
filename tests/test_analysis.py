@@ -67,6 +67,8 @@ def test_e3_decomposition_and_package_model() -> None:
     tables = build_tables(data)
     assert all(row["model_residual_bytes"] == 0 for row in tables["e3_summary"])
     assert len(tables["e3_keygen_summary"]) == 3
+    assert all(row["ciphertext_base64_chars"] > row["file_size_bytes"] for row in tables["e3_summary"])
+    assert all(row["model_metadata_increment_vs_1r"] == 0 for row in tables["e3_summary"] if row["recipient_count"] == 1)
     assert all(row["total_encryption_ms_mean"] == pytest.approx(
         row["encryption_ms_mean"] + row["serialization_ms_mean"]) for row in tables["e3_summary"])
     recipients = generate_demo_recipients(5)

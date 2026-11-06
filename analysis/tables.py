@@ -12,7 +12,7 @@ from typing import Any
 from experiments.attack_and_defense import SUBSETS
 from experiments.evidence import SCHEMAS, calculate_summary, read_csv, validate_output
 from experiments.methodology import ATTACK_SAMPLES, DEFENSE_SAMPLE_IDS, E4_CASES, FILE_SIZES, RECIPIENT_COUNTS
-from .models import metadata_bytes, predicted_overhead_bytes, predicted_package_size
+from .models import ciphertext_base64_chars, metadata_bytes, predicted_overhead_bytes, predicted_package_size
 
 EXPECTED_RUN_ID = "official-20261106T083221Z-3bbf57cc"
 EXPECTED_SOURCE_SHA = "46c455819e4588736d4777c252d844fa03e7caf3"
@@ -130,8 +130,10 @@ def _e3_table(data: dict[str, list[dict[str, str]]]) -> list[dict[str, object]]:
             result: dict[str, object] = {"case_id": f"{count}r_{size}b", "recipient_count": count,
                 "file_size_bytes": size, "package_size_bytes": int(selected[0]["package_size_bytes"]),
                 "overhead_bytes": int(selected[0]["overhead_bytes"]), "overhead_percent": float(selected[0]["overhead_percent"]),
+                "ciphertext_base64_chars": ciphertext_base64_chars(size),
                 "model_package_size_bytes": predicted_package_size(size, count),
                 "model_overhead_bytes": predicted_overhead_bytes(size, count), "model_metadata_bytes": metadata_bytes(size, count)}
+            result["model_metadata_increment_vs_1r"] = metadata_bytes(size, count) - metadata_bytes(size, 1)
             result["model_residual_bytes"] = result["package_size_bytes"] - result["model_package_size_bytes"]
             for field in ("encryption_ns", "serialization_ns", "total_encryption_ns", "decryption_ns"):
                 prefix = field.removesuffix("_ns") + "_ms"
