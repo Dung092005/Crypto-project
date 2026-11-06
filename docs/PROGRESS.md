@@ -470,3 +470,9 @@ Kiểm chứng: editable install và wheel build PASS; wheel chứa LICENSE và
 Toàn bộ pytest **220 passed in 31.52s** với `--basetemp` trong workspace;
 compileall, imports và `git diff --check` PASS. Không có benchmark hoặc
 public deployment mới được thực hiện ở bước tài liệu này.
+
+## TASK 08 — Scientific experiments and evidence collection
+
+Baseline: verified `main` commit `626c68e881a459d63a82f7f844ab558abed81752`; branch `feat/step-08-research-experiments`. Added an offline E1–E4 runner, raw CSV schemas, read-back validation, statistics and a predeclared protocol. E1 tests all seven recipient subsets for 1/96/180-byte `B` samples and a 96-byte leading-zero sample, using the same three e=3 moduli within each trial. E2 compares Textbook/OAEP on those keys. E3 measures prepared-key hybrid workflows separately from RSA keygen. E4 records controlled acceptance/rejection cases. `results/` is ignored; no UI module is changed.
+
+Actual official run ID, sample counts, validation and test commands are recorded in `EXPERIMENT_EVIDENCE.md` after execution. Academic report and TASK 09/10 are still pending.

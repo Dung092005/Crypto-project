@@ -87,6 +87,8 @@ Không Docker, database, server hay authentication trong bước này.
 
 ## Quy tắc bảo mật và tái lập
 
+TASK 08 bổ sung thí nghiệm offline E1–E4 và bằng chứng có provenance; chi tiết thiết kế, biến độc lập/phụ thuộc, điều kiện kiểm soát, schema và giới hạn diễn giải nằm trong `EXPERIMENT_PROTOCOL.md`. Các phép đo hiệu năng không chạy từ Streamlit, không tính sinh khóa vào chi phí mã hóa file thường lệ, và không tự động biến thất bại của CRT-and-root trên OAEP thành một chứng minh bảo mật. TASK 08 không mở rộng giao diện hay viết academic report.
+
 TASK 07 trình bày hai phòng thí nghiệm qua `app.py` và `st.navigation`.
 Attack Lab giữ Scenario/Outcome trong `st.session_state` hiện có; Defense Lab
 giữ `DefenseComparison` và run number trong keys riêng cùng browser session.

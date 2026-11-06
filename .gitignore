@@ -15,6 +15,7 @@ dist/
 # Generated data, local runs, and editor state
 artifacts/
 outputs/
+results/
 data/generated/
 *.log
 .idea/

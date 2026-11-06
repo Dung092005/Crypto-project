@@ -54,14 +54,24 @@
 - **Technical debt:** In-memory demo private keys only, 5 MiB whole-file limit;
   no streaming, certificate/key distribution, sender signature, replay defense,
   network or persistence. Filename is display-only, never a trusted output path.
-- **Next planned tasks:** TASK 08 Secure Sharing UI;
-  TASK 09 experiments/analytics; TASK 10 testing/evaluation/completion.
-  Each needs separate request/review. Academic report has not begun.
+- **TASK 08 research milestone:** TASK 01–07 are reviewer-approved; TASK 07 is
+  merged into `main`. Verified TASK 08 base is
+  `626c68e881a459d63a82f7f844ab558abed81752`. The user confirms the
+  public Streamlit deployment works; this agent has not independently verified
+  its URL. Branch `feat/step-08-research-experiments` adds offline E1 attack
+  conditions, E2 paired OAEP defense, E3 hybrid timing/overhead and E4 package
+  failure validation. The CLI, data schema and interpretation rules are in
+  `EXPERIMENT_PROTOCOL.md`; the run and measured results are indexed in
+  `EXPERIMENT_EVIDENCE.md`. No Streamlit changes are part of TASK 08.
+- **Next planned tasks:** TASK 09 data analysis and visualization; TASK 10
+  final validation. Each needs separate request/review. The academic report is
+  a separate high-priority deliverable after software completion and requires
+  the user's rubric. It has not begun.
 - **Cloud readiness:** root `app.py`, pinned `requirements.txt`, dark theme,
   session isolation, `DEPLOYMENT.md`. `main` contains TASK 07 via PR #1 merge
   commit `48ab2e9d540bd2beb9759f13fd8149598bf1dc5b`; verify the SHA
-  before selecting `main`. User handles deployment. No public deployment
-  performed. Browser visual QA/screenshot was unavailable; AppTest and health
+  before selecting `main`. Historical TASK 07 note: that agent did not deploy;
+  the user later confirmed a working public Streamlit deployment. Browser visual QA/screenshot was unavailable; AppTest and health
   check are separate evidence.
 - **Repository presentation:** root README now gives quick start, two UI demos,
   Secure Sharing CLI status and security limits. Root `LICENSE` uses MIT with

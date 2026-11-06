@@ -16,7 +16,7 @@ khám phá cách AES-GCM và RSA-OAEP phối hợp để chia sẻ file cho nhi�
 | --- | --- | --- |
 | **Attack Lab** | Chọn plaintext, tạo ba ciphertext RSA-2048/e=3, chọn tập Alice/Bob/Charlie mà Eve thu được, xem CRT, căn bậc ba và bảy tổ hợp người nhận. | Interactive UI + CLI |
 | **Defense Lab** | So sánh Textbook RSA và RSA-OAEP trên **cùng plaintext, cùng ba khóa, cùng phép thử của Eve**; kiểm tra giải mã hợp lệ và tính ngẫu nhiên của OAEP. | Interactive UI + CLI |
-| **Secure Sharing** | Mã hóa file bytes một lần bằng AES-256-GCM, bọc khóa AES riêng cho 1–5 người nhận bằng RSA-OAEP, kiểm tra gói dữ liệu và phát hiện chỉnh sửa. | Python API + CLI; UI đang chờ TASK 08 |
+| **Secure Sharing** | Mã hóa file bytes một lần bằng AES-256-GCM, bọc khóa AES riêng cho 1–5 người nhận bằng RSA-OAEP, kiểm tra gói dữ liệu và phát hiện chỉnh sửa. | Python API + CLI; chưa có UI |
 
 ### The central experiment
 
@@ -93,6 +93,18 @@ và xác minh URL do người dùng thực hiện riêng.
    `examples/07_hybrid_sharing.py`.
 
 ## Tests and CLI examples
+
+### Offline research experiments (TASK 08)
+
+The experiment runner is separate from Streamlit and never starts on app import. It records four controlled groups: attack conditions (E1), paired Textbook/OAEP trials (E2), hybrid file timing/overhead (E3), and package failure cases (E4). The **quick** run checks the pipeline only; the **official** run uses at least 20 measured repetitions per timing configuration and 20 independent e=3 key sets.
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.run_experiments --mode quick --output results/quick-check
+.\.venv\Scripts\python.exe -m experiments.run_experiments --mode official --repetitions 20 --warmup 2 --output results/official-check
+.\.venv\Scripts\python.exe -m experiments.run_experiments --validate-only results/official-check
+```
+
+Use a new output directory for each run. `results/` is ignored by Git; reviewed, sanitized evidence is indexed in [EXPERIMENT_EVIDENCE](docs/EXPERIMENT_EVIDENCE.md). Read the [experiment protocol](docs/EXPERIMENT_PROTOCOL.md) before interpreting timing or attack outcomes. This is experimental verification, not a security proof or the academic report.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest

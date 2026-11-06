@@ -163,3 +163,7 @@ giá/giải mã, không có private keys. Chỉ bấm Run mới sinh ba khóa; �
 thay bản nháp và mở chi tiết không gọi lại crypto. Panel đọc status thật
 (`recovered`, `wrong_exact_root`, `no_exact_root`, `invalid_input`) và tách
 Eve computation khỏi experimenter verification. Không dùng cache toàn cục.
+
+## D020 — Offline experiment runner và evidence provenance
+
+TASK 08 chạy E1–E4 ngoài Streamlit, không sửa API mật mã. Official run yêu cầu source đã commit và working tree sạch; manifest ghi SHA, môi trường, cấu hình và run ID. E1/E2 dùng chung bộ ba khóa e=3 trong từng trial để so sánh có kiểm soát. E3 chuẩn bị khóa e=65537 trước khi đo mã hóa; đo keygen riêng, warmup riêng, lưu từng duration `perf_counter_ns` và tính summary từ CSV đã đọc lại. E4 là correctness cases, không gắn số đo timing. `results/` bị ignore; chỉ đưa bản sanitized, đã validation vào `docs/evidence/`. Không seed CSPRNG và không loại outlier. Xem `EXPERIMENT_PROTOCOL.md`.
