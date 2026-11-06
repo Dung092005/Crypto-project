@@ -1,0 +1,52 @@
+[
+  {
+    "key": "rivest1978method",
+    "doi": "10.1145/359340.359342",
+    "title": "A method for obtaining digital signatures and public-key cryptosystems",
+    "status": "verified",
+    "problems": [],
+    "suggestion": null
+  },
+  {
+    "key": "hastad1988solving",
+    "doi": "10.1137/0217019",
+    "title": "Solving Simultaneous Modular Equations of Low Degree",
+    "status": "verified",
+    "problems": [],
+    "suggestion": null
+  },
+  {
+    "key": "bellare1995optimal",
+    "doi": "10.1007/BFb0053428",
+    "title": "Optimal asymmetric encryption",
+    "status": "verified",
+    "problems": [],
+    "suggestion": null
+  },
+  {
+    "key": "moriarty2016pkcs1",
+    "doi": "",
+    "title": "{PKCS} \\#1: {RSA} Cryptography Specifications Version 2.2",
+    "status": "uncertain",
+    "problems": [
+      "title matches but first author 'moriarty' vs record 'kaliski'"
+    ],
+    "suggestion": {
+      "doi": "10.17487/rfc8017",
+      "title": "PKCS #1: RSA Cryptography Specifications Version 2.2",
+      "year": 2016,
+      "first_author": "kaliski",
+      "venue": ""
+    }
+  },
+  {
+    "key": "dworkin2007gcm",
+    "doi": "10.6028/NIST.SP.800-38D",
+    "title": "Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode ({GCM}) and {GMAC}",
+    "status": "mismatch",
+    "problems": [
+      "title differs from record: 'Recommendation for block cipher modes of operation :' (similarity 0.75)"
+    ],
+    "suggestion": null
+  }
+]

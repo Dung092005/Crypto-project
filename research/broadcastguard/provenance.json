@@ -1,0 +1,18 @@
+{
+  "task": "R01 research blueprint and core literature verification",
+  "checked_utc_date": "2026-11-06",
+  "repository": "https://github.com/Dung092005/Crypto-project",
+  "audited_source_sha": "18327fc7be234ca5328f7a6289a463c8c9e41c6e",
+  "main_at_intake_sha": "b5284233bea900d31a2a2794adef3eee548c3165",
+  "official_run_id": "official-20261106T083221Z-3bbf57cc",
+  "official_run_source_sha": "46c455819e4588736d4777c252d844fa03e7caf3",
+  "literature_retrieval": "OpenAlex targeted title search; Crossref exact DOI lookup and BibTeX export; official publisher/RFC/NIST pages",
+  "source_ids": {
+    "S1": "10.1145/359340.359342",
+    "S2": "10.1137/0217019",
+    "S3": "10.1007/BFb0053428",
+    "S4": "RFC 8017",
+    "S5": "10.6028/NIST.SP.800-38D"
+  },
+  "style_reference": "Local 35-page USTH bachelor thesis PDF supplied by the user; pages 1, 18, 22 and 33 visually inspected; not treated as an official midterm template or a source of cryptographic results"
+}

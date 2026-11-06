@@ -1,0 +1,6 @@
+source_id,bib_key,source_type,identifier,year,verified_claim,access_status,primary_record,raw_record
+S1,rivest1978method,peer_reviewed_article,10.1145/359340.359342,1978,"RSA encryption raises integer M to public exponent e modulo n",abstract_and_metadata,https://doi.org/10.1145/359340.359342,01-raw/rsa-crossref.jsonl
+S2,hastad1988solving,peer_reviewed_article,10.1137/0217019,1988,"Low-degree modular equations across relatively prime moduli create a low-exponent RSA vulnerability in a network setting",INACCESSIBLE_full_text,https://epubs.siam.org/doi/abs/10.1137/0217019,01-raw/hastad-crossref.jsonl
+S3,bellare1995optimal,peer_reviewed_conference_paper,10.1007/BFb0053428,1995,"The OAEP construction uses probabilistic encoding before a trapdoor permutation",INACCESSIBLE_full_text,https://link.springer.com/chapter/10.1007/BFb0053428,01-raw/oaep-crossref.jsonl
+S4,moriarty2016pkcs1,informational_RFC,RFC8017,2016,"RSAES-OAEP encoding uses a random seed and has mLen <= k - 2hLen - 2",full_text,https://www.rfc-editor.org/rfc/rfc8017.html,official_RFC_page
+S5,dworkin2007gcm,NIST_standard,10.6028/NIST.SP.800-38D,2007,"GCM authenticates encrypted data and associated data",official_publication_page,https://csrc.nist.gov/pubs/sp/800/38/d/final,01-raw/gcm-crossref.jsonl
