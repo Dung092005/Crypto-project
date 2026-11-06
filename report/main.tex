@@ -8,6 +8,8 @@
 \usepackage{array}
 \usepackage{caption}
 \usepackage{placeins}
+\usepackage{needspace}
+\usepackage{tocloft}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
@@ -15,8 +17,31 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.34em}
 \setlength{\emergencystretch}{1em}
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 \definecolor{usthblue}{HTML}{293A90}
+
+% A compact, generated contents list for the short research report.
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cfttoctitlefont}{\hfill\normalsize\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\null}
+\setlength{\cftbeforetoctitleskip}{0.3em}
+\setlength{\cftaftertoctitleskip}{0.35em}
+\setlength{\cftbeforesecskip}{2pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsecnumwidth}{1.7em}
+\setlength{\cftsubsecindent}{1.8em}
+\setlength{\cftsubsecnumwidth}{2.6em}
+\renewcommand{\cftsecfont}{\small\bfseries}
+\renewcommand{\cftsecpagefont}{\small\bfseries}
+\renewcommand{\cftsubsecfont}{\footnotesize\normalfont}
+\renewcommand{\cftsubsecpagefont}{\footnotesize\normalfont}
+\renewcommand{\cftsecdotsep}{2.5}
+\renewcommand{\cftsubsecdotsep}{2.5}
+\renewcommand{\cftsecleader}{\normalfont\cftdotfill{\cftsecdotsep}}
+\renewcommand{\cftsubsecleader}{\normalfont\cftdotfill{\cftsubsecdotsep}}
+\cftsetpnumwidth{1.5em}
+\cftsetrmarg{1.8em}
 
 \begin{document}
 \pagenumbering{roman}

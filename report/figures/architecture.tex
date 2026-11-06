@@ -4,7 +4,9 @@
               minimum width=2.75cm,minimum height=0.88cm,inner sep=3pt,font=\footnotesize},
   evidence/.style={draw=black!65,align=center,minimum width=8.6cm,
                    minimum height=0.70cm,inner sep=3pt,font=\footnotesize},
-  flow/.style={-{Latex[length=2.2mm]},line width=0.65pt}
+  flow/.style={-{Latex[length=2.2mm]},line width=0.65pt},
+  records/.style={densely dashed,draw=black!65,line width=0.6pt},
+  recordflow/.style={-{Latex[length=2mm]},densely dashed,draw=black!65,line width=0.6pt}
 ]
 \node[box] (a1) at (0,2.6) {Shared bytes\\textbook builder, $e=3$};
 \node[box] (a2) at (3.65,2.6) {Public observations\\$(n_i,e,c_i)$};
@@ -25,6 +27,10 @@
 \draw[flow] (c1) -- (c2); \draw[flow] (c2) -- (c3); \draw[flow] (c3) -- (c4);
 
 \node[evidence] (ev) at (5.475,-1.15) {E1--E4 raw CSVs $\rightarrow$ read-back validation $\rightarrow$ descriptive tables and figures};
-\draw[flow] (a4.south) |- (ev.east);
-\draw[flow] (c3.south) |- (ev.north);
+% Route experiment records outside every box before joining the evidence path.
+\draw[records] (a4.east) -- (12.75,2.6);
+\draw[records] (b4.east) -- (12.75,1.35);
+\draw[records] (c4.east) -- (12.75,0.1);
+\draw[records] (12.75,2.6) -- (12.75,-1.15);
+\draw[recordflow] (12.75,-1.15) -- (ev.east);
 \end{tikzpicture}
