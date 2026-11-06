@@ -478,3 +478,10 @@ Baseline: verified `main` commit `626c68e881a459d63a82f7f844ab558abed81752`; bra
 Official run ID, sample counts, validation and test commands are recorded in `EXPERIMENT_EVIDENCE.md`. Academic report and TASK 09/10 are still pending.
 
 **Official execution:** runner source commit `46c455819e4588736d4777c252d844fa03e7caf3`, clean tree; `official-20261106T083221Z-3bbf57cc`, 20 measured repetitions and 2 E3 warmups. `python -m experiments.run_experiments --mode official --repetitions 20 --warmup 2 --output results/official-task08-20261106` completed: E1 560, E2 60, E3 180, separate keygen 60, E4 11 rows. `--validate-only` returned `VALID` on both raw and curated copies. No failed rows. Quick preflight and a separate quick test run also validated. Full suite: **225 passed in 24.15s** with the project's Windows sandbox temp settings. Technical results and limits are in `EXPERIMENT_EVIDENCE.md`; no formal report was written.
+## TASK 09 - Scientific analysis and report-ready evidence
+
+Baseline integration: main fast-forwarded tu 626c68e881a459d63a82f7f844ab558abed81752 den approved TASK 08 evidence commit 46eff82c6f8bc91c577dac05c027fe2f115bb9da; branch feat/step-09-scientific-analysis duoc tao tu exact baseline. Official dataset van la official-20261106T083221Z-3bbf57cc, source SHA 46c455819e4588736d4777c252d844fa03e7caf3.
+
+Da them analysis/ va sinh docs/analysis/ tu raw CSV. CLI validate official dataset truoc khi phan tich, tinh lai descriptive statistics, tao bang E1/E2/E3/E4, suy ra mo hinh kich thuoc JSON/Base64 va xuat bon hinh PNG/SVG. E1 du doan khop 560/560 rows; E2 co 60/60 Textbook recovery, 0/60 tested OAEP CRT-and-root recovery va 60/60 legitimate OAEP decryption; package model co residual 0 tren 9 cau hinh E3; E4 co 11/11 expected outcomes.
+
+Phan tich ghi ro E2 clustered trong 20 key-set blocks, E3 la wall-clock mot may voi key generation tach rieng, decryption chi do first valid recipient, va E4 la correctness validation deterministic. Khong viet final academic report. TASK 10 danh rieng cho final validation va research-quality audit; report van la buoc sau.

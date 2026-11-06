@@ -89,3 +89,11 @@
   absent; TASK 03 was verified on GitHub. Update this checkpoint after each
   reviewed milestone. Start the academic
   report only after the software work is complete and explicitly requested.
+## TASK 09 scientific analysis checkpoint
+
+- TASK 08 approved va integrated: main fast-forward tu 626c68e881a459d63a82f7f844ab558abed81752 den 46eff82c6f8bc91c577dac05c027fe2f115bb9da. TASK 09 branch: feat/step-09-scientific-analysis. Khong force-push, reset hay resolve conflict.
+- Official evidence: run official-20261106T083221Z-3bbf57cc; source SHA 46c455819e4588736d4777c252d844fa03e7caf3; dataset tai docs/evidence/official-20261106T083221Z-3bbf57cc/; validator tra ve VALID truoc khi phan tich.
+- Analysis command: python -m analysis.run_analysis --input docs/evidence/official-20261106T083221Z-3bbf57cc --output docs/analysis.
+- Artifacts: analysis/models.py, analysis/tables.py, analysis/figures.py, analysis/run_analysis.py, tests/test_analysis.py va docs/analysis/ gom methods, findings, claim-evidence matrix, figure index, nam CSV tables va bon cap PNG/SVG.
+- Evidence interpretation: E1 la verification cua exact bound; E2 paired trong 20 key blocks va 0/60 OAEP non-recovery la empirical; E3 tach encrypt+wrap, serialization, total va key generation; E3 package model khop ca 9 controlled sizes; E4 la 11 deterministic correctness cases.
+- Next: TASK 10 se final validation va research-quality audit. Academic report la buoc sau va chua duoc tao.

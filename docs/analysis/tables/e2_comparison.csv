@@ -1,0 +1,5 @@
+sample_id,comparisons,textbook_recovery,oaep_recovery,legitimate_oaep_decryption,textbook_deterministic,oaep_ciphertexts_distinct,oaep_repeated_decryption
+short_1,20,20,0,20,20,20,20
+medium_96,20,20,0,20,20,20,20
+long_180,20,20,0,20,20,20,20
+all,60,60,0,60,60,60,60

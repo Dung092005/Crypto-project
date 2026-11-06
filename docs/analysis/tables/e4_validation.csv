@@ -1,0 +1,12 @@
+case_id,tested_modification,expected_outcome,observed_outcome,plaintext_returned,pass
+valid_recipient,valid package and matching private key,decrypted,decrypted,True,True
+wrong_private_key,private key for another recipient,decryption_failed,decryption_failed,False,True
+wrong_recipient_id,recipient ID absent from package,decryption_failed,decryption_failed,False,True
+changed_ciphertext,one ciphertext byte changed,decryption_failed,decryption_failed,False,True
+changed_tag,one GCM tag byte changed,decryption_failed,decryption_failed,False,True
+changed_filename,authenticated filename changed,decryption_failed,decryption_failed,False,True
+changed_nonce,one nonce byte changed,decryption_failed,decryption_failed,False,True
+changed_wrapped_key,one RSA-wrapped-key byte changed,decryption_failed,decryption_failed,False,True
+changed_recipient_list,recipient list shortened,decryption_failed,decryption_failed,False,True
+unsupported_version,unsupported package version,invalid_package,invalid_package,False,True
+invalid_json,malformed JSON bytes,invalid_package,invalid_package,False,True

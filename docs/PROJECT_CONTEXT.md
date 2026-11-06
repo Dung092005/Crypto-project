@@ -118,3 +118,4 @@ kiểm tra invariant thay vì mong đợi ciphertext xác định. Ghi phiên b�
 - Commit trên feature branch; chỉ push khi kết nối được repo và đối chiếu lịch sử.
   Nếu môi trường chặn phần nào, ghi BLOCKED và không báo toàn task PASS.
 - Dừng sau TASK 01, chờ review.
+TASK 09 phan tich khoa hoc duoc them tai analysis/ va docs/analysis/. CLI chi doc official evidence, chay validator hien co, kiem tra manifest/SHA/schema/so dong va tinh lai summary tu raw CSV truoc khi sinh bang va hinh. Pipeline tach E1/E2/E3/E4 theo don vi quan sat va khong chay benchmark khi import. Mo hinh kich thuoc package bam theo serializer JSON canonical v1 hien tai, giu filename va recipient IDs cua E3, va kiem tra residual tren ca 9 cau hinh. Hinh PNG 300-DPI va SVG duoc sinh bang Matplotlib Agg; app.py va cac trang Streamlit khong bi thay doi.

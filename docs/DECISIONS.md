@@ -167,3 +167,6 @@ Eve computation khỏi experimenter verification. Không dùng cache toàn cục
 ## D020 — Offline experiment runner và evidence provenance
 
 TASK 08 chạy E1–E4 ngoài Streamlit, không sửa API mật mã. Official run yêu cầu source đã commit và working tree sạch; manifest ghi SHA, môi trường, cấu hình và run ID. E1/E2 dùng chung bộ ba khóa e=3 trong từng trial để so sánh có kiểm soát. E3 chuẩn bị khóa e=65537 trước khi đo mã hóa; đo keygen riêng, warmup riêng, lưu từng duration `perf_counter_ns` và tính summary từ CSV đã đọc lại. E4 là correctness cases, không gắn số đo timing. `results/` bị ignore; chỉ đưa bản sanitized, đã validation vào `docs/evidence/`. Không seed CSPRNG và không loại outlier. Xem `EXPERIMENT_PROTOCOL.md`.
+## D021 - TASK 09 analysis evidence-derived va fail-closed
+
+Phan tich doc rieng official run official-20261106T083221Z-3bbf57cc, khong chen so lieu vao plotting code va khong chay benchmark khi import. load_official_evidence() goi validator TASK 08, kiem tra run ID, source SHA, schema, row counts, validation flags va summary tu raw CSV. Bang E3 bao gom mean/median/SD/Q1/Q3/IQR/min/max theo ms; khong bo outlier. Package model dung canonical JSON skeleton voi do dai thuc te cua Base64, fingerprint, RSA-2048 wrapped key, filename va recipient ID; arbitrary metadata khong bi gan mot header constant.

@@ -1,0 +1,5 @@
+sample_id,message_length_bytes,message_bits,Alice,Bob,Charlie,Alice+Bob,Alice+Charlie,Bob+Charlie,Alice+Bob+Charlie
+short_1,1,7,20,20,20,20,20,20,20
+medium_96,96,767,0,0,0,20,20,20,20
+long_180,180,1439,0,0,0,0,0,0,20
+leading_zero_96,96,2,20,20,20,20,20,20,20
