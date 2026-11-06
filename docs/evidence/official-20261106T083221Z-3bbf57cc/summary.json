@@ -1,0 +1,692 @@
+{
+  "E1": {
+    "leading_zero_96": {
+      "minimum_count_distribution": {
+        "1": 20
+      },
+      "prediction_matches": 140,
+      "recovered_rows": 140,
+      "row_count": 140,
+      "subset_recovery": {
+        "Alice": 20,
+        "Alice+Bob": 20,
+        "Alice+Bob+Charlie": 20,
+        "Alice+Charlie": 20,
+        "Bob": 20,
+        "Bob+Charlie": 20,
+        "Charlie": 20
+      }
+    },
+    "long_180": {
+      "minimum_count_distribution": {
+        "3": 20
+      },
+      "prediction_matches": 140,
+      "recovered_rows": 20,
+      "row_count": 140,
+      "subset_recovery": {
+        "Alice": 0,
+        "Alice+Bob": 0,
+        "Alice+Bob+Charlie": 20,
+        "Alice+Charlie": 0,
+        "Bob": 0,
+        "Bob+Charlie": 0,
+        "Charlie": 0
+      }
+    },
+    "medium_96": {
+      "minimum_count_distribution": {
+        "2": 20
+      },
+      "prediction_matches": 140,
+      "recovered_rows": 80,
+      "row_count": 140,
+      "subset_recovery": {
+        "Alice": 0,
+        "Alice+Bob": 20,
+        "Alice+Bob+Charlie": 20,
+        "Alice+Charlie": 20,
+        "Bob": 0,
+        "Bob+Charlie": 20,
+        "Charlie": 0
+      }
+    },
+    "short_1": {
+      "minimum_count_distribution": {
+        "1": 20
+      },
+      "prediction_matches": 140,
+      "recovered_rows": 140,
+      "row_count": 140,
+      "subset_recovery": {
+        "Alice": 20,
+        "Alice+Bob": 20,
+        "Alice+Bob+Charlie": 20,
+        "Alice+Charlie": 20,
+        "Bob": 20,
+        "Bob+Charlie": 20,
+        "Charlie": 20
+      }
+    }
+  },
+  "E2": {
+    "long_180": {
+      "legitimate_all_decrypt": 20,
+      "oaep_distinct": 20,
+      "oaep_recovered": 0,
+      "textbook_deterministic": 20,
+      "textbook_recovered": 20,
+      "trials": 20
+    },
+    "medium_96": {
+      "legitimate_all_decrypt": 20,
+      "oaep_distinct": 20,
+      "oaep_recovered": 0,
+      "textbook_deterministic": 20,
+      "textbook_recovered": 20,
+      "trials": 20
+    },
+    "short_1": {
+      "legitimate_all_decrypt": 20,
+      "oaep_distinct": 20,
+      "oaep_recovered": 0,
+      "textbook_deterministic": 20,
+      "textbook_recovered": 20,
+      "trials": 20
+    }
+  },
+  "E3": {
+    "1r_102400b": {
+      "file_size_bytes": 102400,
+      "overhead_bytes": [
+        34846
+      ],
+      "package_size_bytes": [
+        137246
+      ],
+      "recipient_count": 1,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 0.9241,
+          "mean_ms": 0.56317,
+          "median_ms": 0.5253,
+          "min_ms": 0.4799,
+          "p25_ms": 0.50735,
+          "p75_ms": 0.550425,
+          "std_ms": 0.10739281118742
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.6034,
+          "mean_ms": 0.159925,
+          "median_ms": 0.1358,
+          "min_ms": 0.0816,
+          "p25_ms": 0.104675,
+          "p75_ms": 0.17825,
+          "std_ms": 0.110795187407358
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 0.9863,
+          "mean_ms": 0.709615,
+          "median_ms": 0.7049,
+          "min_ms": 0.6303,
+          "p25_ms": 0.6662,
+          "p75_ms": 0.714675,
+          "std_ms": 0.0797657179692999
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 1.3222,
+          "mean_ms": 0.86954,
+          "median_ms": 0.8484,
+          "min_ms": 0.7363,
+          "p25_ms": 0.759925,
+          "p75_ms": 0.894875,
+          "std_ms": 0.1488743143516846
+        }
+      }
+    },
+    "1r_10240b": {
+      "file_size_bytes": 10240,
+      "overhead_bytes": [
+        4125
+      ],
+      "package_size_bytes": [
+        14365
+      ],
+      "recipient_count": 1,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 0.8301,
+          "mean_ms": 0.530005,
+          "median_ms": 0.4961,
+          "min_ms": 0.4341,
+          "p25_ms": 0.46725,
+          "p75_ms": 0.5281,
+          "std_ms": 0.10447204851563231
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.1533,
+          "mean_ms": 0.099415,
+          "median_ms": 0.08405,
+          "min_ms": 0.0603,
+          "p25_ms": 0.07325,
+          "p75_ms": 0.121375,
+          "std_ms": 0.03201689151221997
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 0.2207,
+          "mean_ms": 0.10554,
+          "median_ms": 0.1117,
+          "min_ms": 0.067,
+          "p25_ms": 0.074325,
+          "p75_ms": 0.119225,
+          "std_ms": 0.03805802218496882
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 0.374,
+          "mean_ms": 0.204955,
+          "median_ms": 0.1965,
+          "min_ms": 0.1297,
+          "p25_ms": 0.153925,
+          "p75_ms": 0.24225,
+          "std_ms": 0.06260532577815943
+        }
+      }
+    },
+    "1r_1048576b": {
+      "file_size_bytes": 1048576,
+      "overhead_bytes": [
+        350239
+      ],
+      "package_size_bytes": [
+        1398815
+      ],
+      "recipient_count": 1,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 4.7306,
+          "mean_ms": 1.046075,
+          "median_ms": 0.84915,
+          "min_ms": 0.8039,
+          "p25_ms": 0.83175,
+          "p75_ms": 0.87585,
+          "std_ms": 0.8678050762669788
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 1.1436,
+          "mean_ms": 0.47955,
+          "median_ms": 0.4328,
+          "min_ms": 0.3986,
+          "p25_ms": 0.416025,
+          "p75_ms": 0.459675,
+          "std_ms": 0.1650160646087143
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 8.7744,
+          "mean_ms": 7.23203,
+          "median_ms": 6.9796,
+          "min_ms": 6.7026,
+          "p25_ms": 6.9044,
+          "p75_ms": 7.087175,
+          "std_ms": 0.6354815961557279
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 9.173,
+          "mean_ms": 7.71158,
+          "median_ms": 7.4014,
+          "min_ms": 7.1108,
+          "p25_ms": 7.325025,
+          "p75_ms": 7.73055,
+          "std_ms": 0.6648555708612685
+        }
+      }
+    },
+    "3r_102400b": {
+      "file_size_bytes": 102400,
+      "overhead_bytes": [
+        35780
+      ],
+      "package_size_bytes": [
+        138180
+      ],
+      "recipient_count": 3,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 1.0448,
+          "mean_ms": 0.57644,
+          "median_ms": 0.5259,
+          "min_ms": 0.4858,
+          "p25_ms": 0.513475,
+          "p75_ms": 0.543425,
+          "std_ms": 0.14137462141044752
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.2823,
+          "mean_ms": 0.205565,
+          "median_ms": 0.1886,
+          "min_ms": 0.1771,
+          "p25_ms": 0.183425,
+          "p75_ms": 0.215925,
+          "std_ms": 0.03490949614435349
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 1.4018,
+          "mean_ms": 0.72808,
+          "median_ms": 0.6833,
+          "min_ms": 0.6481,
+          "p25_ms": 0.66275,
+          "p75_ms": 0.7286,
+          "std_ms": 0.16278818203581708
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 1.6841,
+          "mean_ms": 0.933645,
+          "median_ms": 0.86705,
+          "min_ms": 0.8355,
+          "p25_ms": 0.8466,
+          "p75_ms": 0.9782,
+          "std_ms": 0.1865888485272816
+        }
+      }
+    },
+    "3r_10240b": {
+      "file_size_bytes": 10240,
+      "overhead_bytes": [
+        5059
+      ],
+      "package_size_bytes": [
+        15299
+      ],
+      "recipient_count": 3,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 0.9541,
+          "mean_ms": 0.50789,
+          "median_ms": 0.4943,
+          "min_ms": 0.4447,
+          "p25_ms": 0.4594,
+          "p75_ms": 0.505175,
+          "std_ms": 0.10904453411818783
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.2266,
+          "mean_ms": 0.177855,
+          "median_ms": 0.17725,
+          "min_ms": 0.1427,
+          "p25_ms": 0.151225,
+          "p75_ms": 0.20215,
+          "std_ms": 0.02849192821983466
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 0.1327,
+          "mean_ms": 0.105495,
+          "median_ms": 0.11195,
+          "min_ms": 0.0767,
+          "p25_ms": 0.08485,
+          "p75_ms": 0.125875,
+          "std_ms": 0.021085826494291575
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 0.3498,
+          "mean_ms": 0.28335,
+          "median_ms": 0.2934,
+          "min_ms": 0.2226,
+          "p25_ms": 0.237025,
+          "p75_ms": 0.32105,
+          "std_ms": 0.04609603819030553
+        }
+      }
+    },
+    "3r_1048576b": {
+      "file_size_bytes": 1048576,
+      "overhead_bytes": [
+        351173
+      ],
+      "package_size_bytes": [
+        1399749
+      ],
+      "recipient_count": 3,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 2.9704,
+          "mean_ms": 0.9919,
+          "median_ms": 0.87955,
+          "min_ms": 0.8115,
+          "p25_ms": 0.846675,
+          "p75_ms": 0.934925,
+          "std_ms": 0.46993760280096314
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 1.9856,
+          "mean_ms": 0.59293,
+          "median_ms": 0.5219,
+          "min_ms": 0.4674,
+          "p25_ms": 0.4901,
+          "p75_ms": 0.5513,
+          "std_ms": 0.329524173859665
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 8.9621,
+          "mean_ms": 7.202215,
+          "median_ms": 7.00525,
+          "min_ms": 6.8856,
+          "p25_ms": 6.934625,
+          "p75_ms": 7.18155,
+          "std_ms": 0.5349397834040959
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 9.4469,
+          "mean_ms": 7.795145,
+          "median_ms": 7.54805,
+          "min_ms": 7.3634,
+          "p25_ms": 7.44545,
+          "p75_ms": 7.70845,
+          "std_ms": 0.6269076096414173
+        }
+      }
+    },
+    "5r_102400b": {
+      "file_size_bytes": 102400,
+      "overhead_bytes": [
+        36713
+      ],
+      "package_size_bytes": [
+        139113
+      ],
+      "recipient_count": 5,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 0.5636,
+          "mean_ms": 0.527675,
+          "median_ms": 0.5245,
+          "min_ms": 0.4864,
+          "p25_ms": 0.5131,
+          "p75_ms": 0.541375,
+          "std_ms": 0.0220370949226884
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.3904,
+          "mean_ms": 0.288925,
+          "median_ms": 0.27265,
+          "min_ms": 0.2457,
+          "p25_ms": 0.26255,
+          "p75_ms": 0.315725,
+          "std_ms": 0.03678914134704195
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 0.7326,
+          "mean_ms": 0.696205,
+          "median_ms": 0.68825,
+          "min_ms": 0.653,
+          "p25_ms": 0.67785,
+          "p75_ms": 0.723575,
+          "std_ms": 0.02737760273615912
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 1.1175,
+          "mean_ms": 0.98513,
+          "median_ms": 0.95955,
+          "min_ms": 0.9155,
+          "p25_ms": 0.93275,
+          "p75_ms": 1.0388,
+          "std_ms": 0.06052833264374279
+        }
+      }
+    },
+    "5r_10240b": {
+      "file_size_bytes": 10240,
+      "overhead_bytes": [
+        5992
+      ],
+      "package_size_bytes": [
+        16232
+      ],
+      "recipient_count": 5,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 2.4033,
+          "mean_ms": 0.60562,
+          "median_ms": 0.5088,
+          "min_ms": 0.45,
+          "p25_ms": 0.47345,
+          "p75_ms": 0.51745,
+          "std_ms": 0.42811237408197544
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.3832,
+          "mean_ms": 0.2617,
+          "median_ms": 0.24305,
+          "min_ms": 0.21,
+          "p25_ms": 0.22965,
+          "p75_ms": 0.282675,
+          "std_ms": 0.04245262374880845
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 0.2037,
+          "mean_ms": 0.11314,
+          "median_ms": 0.1037,
+          "min_ms": 0.0823,
+          "p25_ms": 0.087275,
+          "p75_ms": 0.13305,
+          "std_ms": 0.03165407431994548
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 0.5869,
+          "mean_ms": 0.37484,
+          "median_ms": 0.35375,
+          "min_ms": 0.3035,
+          "p25_ms": 0.316375,
+          "p75_ms": 0.41365,
+          "std_ms": 0.07150123591129111
+        }
+      }
+    },
+    "5r_1048576b": {
+      "file_size_bytes": 1048576,
+      "overhead_bytes": [
+        352106
+      ],
+      "package_size_bytes": [
+        1400682
+      ],
+      "recipient_count": 5,
+      "recorded": 20,
+      "timing": {
+        "decryption_ns": {
+          "count": 20,
+          "max_ms": 1.1703,
+          "mean_ms": 0.870745,
+          "median_ms": 0.86415,
+          "min_ms": 0.8094,
+          "p25_ms": 0.82815,
+          "p75_ms": 0.88185,
+          "std_ms": 0.07746905307418264
+        },
+        "encryption_ns": {
+          "count": 20,
+          "max_ms": 0.6276,
+          "mean_ms": 0.583145,
+          "median_ms": 0.5781,
+          "min_ms": 0.5545,
+          "p25_ms": 0.564825,
+          "p75_ms": 0.59395,
+          "std_ms": 0.02199072711274842
+        },
+        "serialization_ns": {
+          "count": 20,
+          "max_ms": 8.566,
+          "mean_ms": 7.01087,
+          "median_ms": 6.9482,
+          "min_ms": 6.6959,
+          "p25_ms": 6.877175,
+          "p75_ms": 6.98735,
+          "std_ms": 0.39091542509722915
+        },
+        "total_encryption_ns": {
+          "count": 20,
+          "max_ms": 9.152,
+          "mean_ms": 7.594015,
+          "median_ms": 7.52095,
+          "min_ms": 7.2851,
+          "p25_ms": 7.4406,
+          "p75_ms": 7.56885,
+          "std_ms": 0.39536977265792456
+        }
+      }
+    }
+  },
+  "E3_keygen": {
+    "1": {
+      "recorded": 20,
+      "timing": {
+        "count": 20,
+        "max_ms": 77.7425,
+        "mean_ms": 31.130485,
+        "median_ms": 31.48615,
+        "min_ms": 7.2737,
+        "p25_ms": 17.273475,
+        "p75_ms": 41.186425,
+        "std_ms": 17.477502874395416
+      }
+    },
+    "3": {
+      "recorded": 20,
+      "timing": {
+        "count": 20,
+        "max_ms": 182.4527,
+        "mean_ms": 117.64457,
+        "median_ms": 121.12575,
+        "min_ms": 35.9553,
+        "p25_ms": 81.683125,
+        "p75_ms": 147.255925,
+        "std_ms": 40.789197360512524
+      }
+    },
+    "5": {
+      "recorded": 20,
+      "timing": {
+        "count": 20,
+        "max_ms": 229.355,
+        "mean_ms": 163.275865,
+        "median_ms": 171.11365,
+        "min_ms": 86.9242,
+        "p25_ms": 137.753625,
+        "p75_ms": 188.148725,
+        "std_ms": 38.379493646234344
+      }
+    }
+  },
+  "E4": {
+    "changed_ciphertext": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "changed_filename": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "changed_nonce": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "changed_recipient_list": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "changed_tag": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "changed_wrapped_key": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "invalid_json": {
+      "expected": "invalid_package",
+      "observed": "invalid_package",
+      "passed": true
+    },
+    "unsupported_version": {
+      "expected": "invalid_package",
+      "observed": "invalid_package",
+      "passed": true
+    },
+    "valid_recipient": {
+      "expected": "decrypted",
+      "observed": "decrypted",
+      "passed": true
+    },
+    "wrong_private_key": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    },
+    "wrong_recipient_id": {
+      "expected": "decryption_failed",
+      "observed": "decryption_failed",
+      "passed": true
+    }
+  },
+  "complete": true,
+  "mode": "official",
+  "row_counts": {
+    "attack_conditions.csv": 560,
+    "hybrid_performance.csv": 180,
+    "key_generation.csv": 60,
+    "oaep_comparison.csv": 60,
+    "security_validation.csv": 11
+  },
+  "run_id": "official-20261106T083221Z-3bbf57cc",
+  "validation_failures": {
+    "attack_conditions.csv": 0,
+    "hybrid_performance.csv": 0,
+    "key_generation.csv": 0,
+    "oaep_comparison.csv": 0,
+    "security_validation.csv": 0
+  }
+}

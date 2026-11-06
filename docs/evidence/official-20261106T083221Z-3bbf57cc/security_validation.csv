@@ -1,0 +1,12 @@
+run_id,experiment_id,case_id,repetition,expected_status,observed_status,rejected,plaintext_returned,validation_pass,error_type
+official-20261106T083221Z-3bbf57cc,E4,valid_recipient,0,decrypted,decrypted,False,True,True,
+official-20261106T083221Z-3bbf57cc,E4,wrong_private_key,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,wrong_recipient_id,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_ciphertext,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_tag,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_filename,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_nonce,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_wrapped_key,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,changed_recipient_list,0,decryption_failed,decryption_failed,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,unsupported_version,0,invalid_package,invalid_package,True,False,True,
+official-20261106T083221Z-3bbf57cc,E4,invalid_json,0,invalid_package,invalid_package,True,False,True,

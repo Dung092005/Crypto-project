@@ -62,7 +62,12 @@
   conditions, E2 paired OAEP defense, E3 hybrid timing/overhead and E4 package
   failure validation. The CLI, data schema and interpretation rules are in
   `EXPERIMENT_PROTOCOL.md`; the run and measured results are indexed in
-  `EXPERIMENT_EVIDENCE.md`. No Streamlit changes are part of TASK 08.
+  `EXPERIMENT_EVIDENCE.md`. Official run
+  `official-20261106T083221Z-3bbf57cc` used clean source commit `46c4558`,
+  20 repetitions, 2 E3 warmups, 871 total CSV rows and passed read-back
+  validation with zero failed cases. Curated data are in `docs/evidence/`;
+  raw local `results/` is ignored. Full pytest: 225 passed. No Streamlit
+  changes are part of TASK 08.
 - **Next planned tasks:** TASK 09 data analysis and visualization; TASK 10
   final validation. Each needs separate request/review. The academic report is
   a separate high-priority deliverable after software completion and requires
