@@ -7,6 +7,7 @@ from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
+matplotlib.rcParams["svg.hashsalt"] = "broadcastguard-task09"
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -21,8 +22,8 @@ def _read(path: Path) -> list[dict[str, str]]:
 
 def _save(fig: plt.Figure, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path.with_suffix(".png"), dpi=300, bbox_inches="tight")
-    fig.savefig(path.with_suffix(".svg"), bbox_inches="tight")
+    fig.savefig(path.with_suffix(".png"), dpi=300, bbox_inches="tight", metadata={"Software": "BroadcastGuard TASK 09 analysis"})
+    fig.savefig(path.with_suffix(".svg"), bbox_inches="tight", metadata={"Date": "2026-11-06T00:00:00", "Creator": "BroadcastGuard TASK 09 analysis"})
     svg_path = path.with_suffix(".svg")
     svg_path.write_text("\n".join(line.rstrip() for line in svg_path.read_text(encoding="utf-8").splitlines()) + "\n", encoding="utf-8")
     plt.close(fig)
