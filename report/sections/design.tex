@@ -4,7 +4,7 @@ Figure~\ref{fig:architecture} shows the three computational paths and the separa
 \begin{figure}[!ht]
 \centering
 \resizebox{\linewidth}{!}{\input{figures/architecture}}
-\caption{Implemented data flows. Eve receives only public observations; original plaintext reaches the evaluator, not the attack engine. Defense compares two schemes under the same RSA keys. The hybrid path wraps one fresh AES key per recipient after encrypting the file once. The evidence pipeline validates archived experiment records before analysis.}
+\caption{Implemented data flows. Eve receives only public observations; original plaintext reaches the evaluator, not the attack engine. Defense compares two schemes under the same RSA keys. The hybrid path encrypts the file once and wraps its fresh AES key separately for each recipient. The evidence pipeline validates archived experiment records before analysis.}
 \label{fig:architecture}
 \end{figure}
 

@@ -15,6 +15,7 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.34em}
 \setlength{\emergencystretch}{1em}
+\setcounter{tocdepth}{1}
 \definecolor{usthblue}{HTML}{293A90}
 
 \begin{document}
@@ -33,10 +34,10 @@
 \input{sections/design}
 \input{sections/methods}
 \input{sections/results}
-\clearpage
 \input{sections/discussion}
 
-\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
 \small
 \bibliographystyle{IEEEtran}
 \bibliography{../research/broadcastguard/REFERENCES}
