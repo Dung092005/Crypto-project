@@ -1,0 +1,13 @@
+\section{Cryptographic background and threat model}
+In the educational attack, Alice, Bob and Charlie have independent 2048-bit RSA moduli $n_i$ and the common public exponent $e=3$. A nonempty byte string is interpreted as a nonnegative big-endian integer $M$, checked to satisfy $M<n_i$ for each recipient, and encrypted as $c_i=M^3\bmod n_i$. Eve sees the public $(n_i,e,c_i)$ observations but not the private keys or original message. The moduli are required to be pairwise coprime; the builder checks this property rather than silently assuming it.
+
+For any nonempty observed subset $S$, let $N_S=\prod_{i\in S}n_i$. CRT gives a unique residue $X\in[0,N_S)$ satisfying $X\equiv c_i\pmod{n_i}$ for every $i\in S$. More explicitly, with $N_i=N_S/n_i$ and $u_i=N_i^{-1}\bmod n_i$,
+\begin{equation}\label{eq:crt}
+X=\left(\sum_{i\in S} c_i N_i u_i\right)\bmod N_S
+  = M^3\bmod N_S .
+\end{equation}
+Pairwise coprimality ensures $\gcd(N_i,n_i)=1$, so each inverse exists. The attack computes $r=\lfloor\sqrt[3]{X}\rfloor$ by integer arithmetic and checks $r^3=X$; floating-point roots are unsuitable for RSA-sized integers. If $M^3<N_S$, then $X=M^3$ and $r=M$. Conversely, under the stated valid-input assumptions this particular nonnegative CRT-and-root procedure returns $M$ only if $M^3<N_S$. The weaker condition $M<N_S$ is insufficient. A perfect cube may yield an exact but \emph{wrong} candidate; Eve cannot test equality with an unknown original $M$. A separate experiment evaluator performs that comparison and checks the inequality.
+
+Integer recovery must not be confused with byte-for-byte recovery. Big-endian conversion maps both the single byte \texttt{0x02} and the 96-byte sequence $\texttt{0x00}^{95}\Vert\texttt{0x02}$ to $M=2$. In E1, Eve can recover integer 2 from one ciphertext, but cannot infer that the original serialization had 95 leading zero bytes. The evaluator knows the supplied length and uses it to reconstruct the original bytes. Accordingly, the E1 recovery indicator means \emph{evaluator-confirmed integer equality}; exact original bytes require a length or encoding convention known independently.
+
+RSA-OAEP changes the integer representative before RSA exponentiation through randomized encoding~\cite{bellare1995optimal,moriarty2016pkcs1}. The simple shared unpadded-$M^3$ relation therefore does not describe OAEP ciphertexts. The controlled defense experiment uses RSAES-OAEP with SHA-256, MGF1(SHA-256) and the empty label. RFC~8017 specifies $m_{\mathrm{Len}}\leq k-2h_{\mathrm{Len}}-2$; for a 256-byte RSA-2048 modulus and a 32-byte SHA-256 output, this limits input to 190 bytes~\cite{moriarty2016pkcs1}. Observing distinct OAEP ciphertexts illustrates randomization but is not, by itself, a formal security proof.

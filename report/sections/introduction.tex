@@ -1,0 +1,16 @@
+\begin{abstract}
+Sending one unpadded integer to multiple RSA recipients with public exponent $e=3$ can expose that integer without any private key. BroadcastGuard studies the exact CRT-and-cube-root condition, compares the same attack against RSA-OAEP under paired keys, and implements authenticated file sharing for several recipients. Twenty independent RSA key-set blocks produced 560 controlled subset observations, all consistent with the predicted integer-recovery condition. In 60 same-key comparisons, the tested attack recovered the textbook RSA message in 60 cases and the OAEP message in none; intended OAEP recipients decrypted in all 60. For a 1\,MiB hybrid-encrypted file and one recipient, JSON/Base64 serialization accounted for 93.78\% of the measured encryption workflow mean on one Windows machine. Eleven selected package-validity cases matched expected outcomes. The contribution is a reproducible educational integration and evidence-based analysis of established cryptographic methods, not a new primitive or a proof of universal security.
+\end{abstract}
+
+\begingroup
+\small
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+
+\section{Introduction and research questions}
+RSA public encryption transforms an integer under a public modulus and exponent~\cite{rivest1978method}. If the same integer is encrypted without padding under distinct moduli with a small exponent, the ciphertexts retain an algebraic relationship accessible to an observer. Håstad examined broader systems of low-degree modular equations~\cite{hastad1988solving}; the fixed-message case studied here has a direct Chinese Remainder Theorem (CRT) derivation. This deliberately unsafe example exposes why correct arithmetic and correct security assumptions must be considered together. It does not imply that a properly configured RSA-OAEP deployment is vulnerable to the same simple procedure.
+
+A demonstration that Eve sometimes recovers a message is incomplete without specifying \emph{when} recovery is mathematically possible, what Eve actually learns, and how the outcome changes when the encryption scheme is replaced. It also leaves unanswered how to protect a file too large for direct RSA-OAEP encryption. BroadcastGuard connects these questions through a public-only attack engine, a seven-subset conditions analyzer, a same-key OAEP comparison, and an AES-GCM/RSA-OAEP multi-recipient package. The \href{https://broadcastguard-crypto.streamlit.app/}{interactive application} illustrates the algorithms; its interface is not independent experimental evidence.
+
+The study addresses four questions: \textbf{RQ1}, which numerical condition characterizes recovery of a shared integer by CRT-and-root? \textbf{RQ2}, what changes when only textbook RSA is replaced by randomized RSA-OAEP while keys, plaintext and attacker procedure remain fixed? \textbf{RQ3}, how do file size, recipient count and JSON/Base64 packaging affect hybrid-encryption time and storage? \textbf{RQ4}, which selected invalid or altered packages are rejected without returning plaintext?

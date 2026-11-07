@@ -1,0 +1,12 @@
+\Needspace{10\baselineskip}
+\section{Critical discussion and limitations}
+E1's agreement with the exact $M^3<N_S$ prediction depends on a common integer, valid textbook RSA inputs and pairwise-coprime moduli. The leading-zero case exposes a distinct encoding limit: modular arithmetic recovers an integer, while byte-for-byte reconstruction needs a known length or convention. Showing the original 96 bytes in a demonstration therefore requires disclosure that the evaluator supplied their length.
+
+E2 holds keys and plaintext fixed within each pair, isolating the scheme change more clearly than independently generated keys would. Yet 0/60 OAEP recoveries concern only the tested CRT-and-root procedure and three messages. The 60 comparisons cluster within 20 independent key-set blocks; neither they nor OAEP ciphertext diversity constitute a formal security proof. The implementation uses library OAEP rather than designing new padding.
+
+E3 separates cryptographic work from packaging. A more compact representation is a sensible future comparison, but was not measured. JSON/Base64 trades storage and serialization time for inspectability. Twenty repetitions per configuration on one Windows computer do not predict performance on other hardware or in the cloud. Recipient-key generation was timed separately, and decryption timing covers only one recipient.
+
+Secure sharing assumes recipient public keys were authenticated before encryption; a fingerprint identifies a key but not a person. AES-GCM authenticates ciphertext and AAD under the unwrapped key~\cite{dworkin2007gcm}, not the sender. The package leaves filename and recipient metadata visible and has no sender signature, replay protection, PKI, revocation or persistent private-key management. E4's selected rejections cannot cover all malformed inputs or establish intent. Such extensions need an explicit threat model and new evidence.
+
+\section{Conclusion}
+BroadcastGuard connects the exact textbook RSA broadcast condition to a same-key OAEP comparison and authenticated multi-recipient file sharing. Its 560 E1 observations verify the known integer-recovery bound; 60 E2 pairs show non-recovery by the selected attack against OAEP alongside valid decryption. E3 quantifies the JSON/Base64 packaging cost, and E4 verifies selected fail-closed cases. The contribution is controlled integration and interpretation of established methods, not a new primitive or a universal security proof.
